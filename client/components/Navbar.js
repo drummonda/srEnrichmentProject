@@ -7,8 +7,8 @@ export default class Navbar extends Component {
     return (
 
       <nav id="navbar">
-        <NavLink class='nav-link' to='/students'>Students</NavLink>
-        <NavLink class='nav-link' to='/campuses'>Campuses</NavLink>
+        <NavLink className='nav-link' to='/students'>Students</NavLink>
+        <NavLink className='nav-link' to='/campuses'>Campuses</NavLink>
       </nav>
     )
   }

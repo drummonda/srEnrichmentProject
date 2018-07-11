@@ -10,7 +10,7 @@ import store from './store'
 ReactDOM.render(
   <Provider store={store}>
     <HashRouter>
-      <div id='container'>
+      <div id='app'>
         <Navbar/>
         <App />
       </div>

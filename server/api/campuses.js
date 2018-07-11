@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const {Campus, Student} = require('../db')
 
+// Get all campuses at
 router.get('/', async (req, res, next) => {
   const allCampuses = await Campus.findAll({ include: [Student] });
   res.json(allCampuses);

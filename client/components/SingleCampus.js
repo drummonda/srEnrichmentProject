@@ -7,11 +7,16 @@ class SingleCampus extends Component {
 
   constructor (props) {
     super(props);
+    this.buttonClick = this.buttonClick.bind(this);
   }
 
   componentDidMount () {
     const campusId = Number(this.props.campusToSet)
     this.props.fetchCampus(campusId);
+  }
+
+  buttonClick () {
+    this.props.history.goBack();
   }
 
   render () {
@@ -25,6 +30,7 @@ class SingleCampus extends Component {
         <h3>Location: {campus.location}</h3>
         <h3>Headmaster: {campus.headmaster}</h3>
         <StudentList students={campus.students} campusId={campus.id}/>
+        <button onClick={this.buttonClick} >Back</button>
        </div>
        :
        <h2>Loading</h2>
@@ -37,6 +43,7 @@ class SingleCampus extends Component {
 const mapStateToProps = (state, ownProps) => ({
   campusToSet: ownProps.match.params.campusId,
   currentCampus: state.campuses.currentCampus,
+  history: ownProps.history,
 });
 
 const mapDispatchToProps = dispatch => ({

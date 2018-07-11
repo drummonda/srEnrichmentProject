@@ -111,10 +111,15 @@ class AllCampuses extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
   constructor(props) {
     super(props);
+    this.buttonClick = this.buttonClick.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchCampuses();
+  }
+
+  buttonClick() {
+    this.props.history.goBack();
   }
 
   render() {
@@ -141,13 +146,19 @@ class AllCampuses extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
             campus.name
           )
         ))
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        'button',
+        { onClick: this.buttonClick },
+        'Back'
       )
     );
   }
 }
 
-const mapStateToProps = state => ({
-  campuses: state.campuses.list
+const mapStateToProps = (state, ownProps) => ({
+  campuses: state.campuses.list,
+  history: ownProps.history
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -183,10 +194,15 @@ class AllStudents extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
   constructor(props) {
     super(props);
+    this.buttonClick = this.buttonClick.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchStudents();
+  }
+
+  buttonClick() {
+    this.props.history.goBack();
   }
 
   render() {
@@ -213,13 +229,28 @@ class AllStudents extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
             student.name
           )
         ))
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        'button',
+        { onClick: this.buttonClick },
+        'Back'
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        'button',
+        { id: 'create-button' },
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
+          { to: '/new-student-form' },
+          'Add a new student!'
+        )
       )
     );
   }
 }
 
-const mapStateToProps = state => ({
-  students: state.students.list
+const mapStateToProps = (state, ownProps) => ({
+  students: state.students.list,
+  history: ownProps.history
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -249,6 +280,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AllCampuses__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AllCampuses */ "./client/components/AllCampuses.js");
 /* harmony import */ var _SingleCampus__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SingleCampus */ "./client/components/SingleCampus.js");
 /* harmony import */ var _SingleStudent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SingleStudent */ "./client/components/SingleStudent.js");
+/* harmony import */ var _CreateStudentForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CreateStudentForm */ "./client/components/CreateStudentForm.js");
+
 
 
 
@@ -269,11 +302,122 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       ),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], { exact: true, path: '/students', component: _AllStudents__WEBPACK_IMPORTED_MODULE_2__["default"] }),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], { exact: true, path: '/campuses', component: _AllCampuses__WEBPACK_IMPORTED_MODULE_3__["default"] }),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], { path: '/new-student-form', component: _CreateStudentForm__WEBPACK_IMPORTED_MODULE_6__["default"] }),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], { path: '/campuses/:campusId', component: _SingleCampus__WEBPACK_IMPORTED_MODULE_4__["default"] }),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], { path: '/students/:studentId', component: _SingleStudent__WEBPACK_IMPORTED_MODULE_5__["default"] })
     );
   }
 }
+
+/***/ }),
+
+/***/ "./client/components/CreateStudentForm.js":
+/*!************************************************!*\
+  !*** ./client/components/CreateStudentForm.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../reducers/studentReducer */ "./client/reducers/studentReducer.js");
+
+
+
+
+
+class CreateStudentForm extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
+
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    const value = event.target.value;
+    const name = event.target.name;
+    if (name === 'name') {
+      this.props.newStudentName(value);
+    } else if (name === 'age') {
+      this.props.newStudentAge(value);
+    } else if (name === 'food') {
+      this.props.newStudentFood(value);
+    }
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const { name, age, food } = this.props;
+    const student = { name, age, food };
+    this.props.postStudent(student);
+    this.props.newStudentName('');
+    this.props.newStudentAge('');
+    this.props.newStudentFood('');
+  }
+
+  render() {
+    const { name, age, food } = this.props;
+
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      'div',
+      { className: 'form', id: 'create-student-form' },
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        'h2',
+        null,
+        'Cody\'s fucking student creation form'
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        'form',
+        { onSubmit: this.handleSubmit },
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'label',
+          null,
+          'Student Name'
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('input', { type: 'text', name: 'name', value: name, onChange: this.handleChange }),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'label',
+          null,
+          'Student Age'
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('input', { type: 'text', name: 'age', value: age, onChange: this.handleChange }),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'label',
+          null,
+          'Favorite Food'
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('input', { type: 'text', name: 'food', value: food, onChange: this.handleChange }),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'button',
+          null,
+          'Create!'
+        )
+      )
+    );
+  }
+}
+
+const mapStateToProps = state => ({
+  name: state.students.newStudentName,
+  age: state.students.newStudentAge,
+  food: state.students.newStudentFood
+});
+
+const mapDispatchToProps = dispatch => ({
+  newStudentName: name => dispatch(Object(_reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__["newStudentName"])(name)),
+  newStudentAge: age => dispatch(Object(_reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__["newStudentAge"])(age)),
+  newStudentFood: food => dispatch(Object(_reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__["newStudentFood"])(food)),
+  postStudent: student => dispatch(Object(_reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__["postStudent"])(student))
+});
+
+const CreateStudentContainer = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps, mapDispatchToProps)(CreateStudentForm);
+
+/* harmony default export */ __webpack_exports__["default"] = (CreateStudentContainer);
 
 /***/ }),
 
@@ -301,12 +445,12 @@ class Navbar extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       { id: 'navbar' },
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"],
-        { 'class': 'nav-link', to: '/students' },
+        { className: 'nav-link', to: '/students' },
         'Students'
       ),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"],
-        { 'class': 'nav-link', to: '/campuses' },
+        { className: 'nav-link', to: '/campuses' },
         'Campuses'
       )
     );
@@ -338,11 +482,16 @@ class SingleCampus extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
   constructor(props) {
     super(props);
+    this.buttonClick = this.buttonClick.bind(this);
   }
 
   componentDidMount() {
     const campusId = Number(this.props.campusToSet);
     this.props.fetchCampus(campusId);
+  }
+
+  buttonClick() {
+    this.props.history.goBack();
   }
 
   render() {
@@ -369,7 +518,12 @@ class SingleCampus extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         'Headmaster: ',
         campus.headmaster
       ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StudentList__WEBPACK_IMPORTED_MODULE_3__["default"], { students: campus.students, campusId: campus.id })
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StudentList__WEBPACK_IMPORTED_MODULE_3__["default"], { students: campus.students, campusId: campus.id }),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        'button',
+        { onClick: this.buttonClick },
+        'Back'
+      )
     ) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       'h2',
       null,
@@ -381,7 +535,8 @@ class SingleCampus extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
 const mapStateToProps = (state, ownProps) => ({
   campusToSet: ownProps.match.params.campusId,
-  currentCampus: state.campuses.currentCampus
+  currentCampus: state.campuses.currentCampus,
+  history: ownProps.history
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -415,11 +570,16 @@ class SingleStudent extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
   constructor(props) {
     super(props);
+    this.buttonClick = this.buttonClick.bind(this);
   }
 
   componentDidMount() {
     const studentId = Number(this.props.studentToSet);
     this.props.fetchStudent(studentId);
+  }
+
+  buttonClick() {
+    this.props.history.goBack();
   }
 
   render() {
@@ -445,6 +605,11 @@ class SingleStudent extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         null,
         'Favorite Food: ',
         student.favorite_food
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        'button',
+        { onClick: this.buttonClick },
+        'Back'
       )
     ) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       'h2',
@@ -457,6 +622,7 @@ class SingleStudent extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
 const mapStateToProps = (state, ownProps) => ({
   studentToSet: ownProps.match.params.studentId,
+  history: ownProps.history,
   currentStudent: state.students.currentStudent
 });
 
@@ -490,7 +656,6 @@ __webpack_require__.r(__webpack_exports__);
 const StudentList = ({ students, campusId }) => {
   console.log("These are all the students:", students);
   console.log("campus id: ", campusId);
-  const filteredStudents = students.filter(student => student.campusId === campusId);
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
     'div',
@@ -503,7 +668,7 @@ const StudentList = ({ students, campusId }) => {
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       'ul',
       null,
-      filteredStudents.length && filteredStudents.map(student => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      students.length && students.map(student => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         'li',
         { key: student.id },
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
@@ -554,7 +719,7 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_
     null,
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       'div',
-      { id: 'container' },
+      { id: 'app' },
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Navbar__WEBPACK_IMPORTED_MODULE_3__["default"], null),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_App__WEBPACK_IMPORTED_MODULE_2__["default"], null)
     )
@@ -567,7 +732,7 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_
 /*!******************************************!*\
   !*** ./client/reducers/campusReducer.js ***!
   \******************************************/
-/*! exports provided: GET_CAMPUSES_FROM_SERVER, GET_CAMPUSES, SET_CAMPUS, getCampus, fetchCampuses, fetchCampus, default */
+/*! exports provided: GET_CAMPUSES_FROM_SERVER, GET_CAMPUSES, SET_CAMPUS, ADD_CAMPUS, getCampus, fetchCampuses, fetchCampus, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -575,6 +740,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_CAMPUSES_FROM_SERVER", function() { return GET_CAMPUSES_FROM_SERVER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_CAMPUSES", function() { return GET_CAMPUSES; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_CAMPUS", function() { return SET_CAMPUS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_CAMPUS", function() { return ADD_CAMPUS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCampus", function() { return getCampus; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchCampuses", function() { return fetchCampuses; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchCampus", function() { return fetchCampus; });
@@ -586,6 +752,7 @@ __webpack_require__.r(__webpack_exports__);
 const GET_CAMPUSES_FROM_SERVER = 'GET_CAMPUSES_FROM_SERVER';
 const GET_CAMPUSES = 'GET_CAMPUSES';
 const SET_CAMPUS = 'SET_CAMPUS';
+const ADD_CAMPUS = 'ADD_CAMPUS';
 
 // ACTION CREATORS
 const getCampuses = campuses => ({
@@ -645,7 +812,7 @@ const initialState = {
 /*!*******************************************!*\
   !*** ./client/reducers/studentReducer.js ***!
   \*******************************************/
-/*! exports provided: GET_STUDENTS_FROM_SERVER, GET_STUDENTS, GET_STUDENT, fetchStudents, fetchStudent, default */
+/*! exports provided: GET_STUDENTS_FROM_SERVER, GET_STUDENTS, GET_STUDENT, ADD_STUDENT, NEW_STUDENT_NAME, NEW_STUDENT_AGE, NEW_STUDENT_FOOD, getStudents, getStudent, addStudent, newStudentName, newStudentAge, newStudentFood, fetchStudents, fetchStudent, postStudent, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -653,8 +820,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_STUDENTS_FROM_SERVER", function() { return GET_STUDENTS_FROM_SERVER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_STUDENTS", function() { return GET_STUDENTS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_STUDENT", function() { return GET_STUDENT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_STUDENT", function() { return ADD_STUDENT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NEW_STUDENT_NAME", function() { return NEW_STUDENT_NAME; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NEW_STUDENT_AGE", function() { return NEW_STUDENT_AGE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NEW_STUDENT_FOOD", function() { return NEW_STUDENT_FOOD; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getStudents", function() { return getStudents; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getStudent", function() { return getStudent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addStudent", function() { return addStudent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "newStudentName", function() { return newStudentName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "newStudentAge", function() { return newStudentAge; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "newStudentFood", function() { return newStudentFood; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStudents", function() { return fetchStudents; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStudent", function() { return fetchStudent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postStudent", function() { return postStudent; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
@@ -663,6 +841,10 @@ __webpack_require__.r(__webpack_exports__);
 const GET_STUDENTS_FROM_SERVER = 'GET_STUDENTS_FROM_SERVER';
 const GET_STUDENTS = 'GET_STUDENTS';
 const GET_STUDENT = 'GET_STUDENT';
+const ADD_STUDENT = 'ADD_STUDENT';
+const NEW_STUDENT_NAME = 'NEW_STUDENT_NAME';
+const NEW_STUDENT_AGE = 'NEW_STUDENT_AGE';
+const NEW_STUDENT_FOOD = 'NEW_STUDENT_FOOD';
 
 // ACTION CREATORS
 const getStudents = students => ({
@@ -673,6 +855,26 @@ const getStudents = students => ({
 const getStudent = student => ({
   type: GET_STUDENT,
   student
+});
+
+const addStudent = student => ({
+  type: ADD_STUDENT,
+  student
+});
+
+const newStudentName = name => ({
+  type: NEW_STUDENT_NAME,
+  name
+});
+
+const newStudentAge = age => ({
+  type: NEW_STUDENT_AGE,
+  age
+});
+
+const newStudentFood = food => ({
+  type: NEW_STUDENT_FOOD,
+  food
 });
 
 // THUNK MIDDLEWARE
@@ -694,10 +896,20 @@ const fetchStudent = studentId => {
   };
 };
 
+const postStudent = student => async dispatch => {
+  console.log(student);
+  const response = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/students', student);
+  const gotStudent = response.data;
+  dispatch(addStudent(gotStudent));
+};
+
 // INITIAL STATE
 const initialState = {
   list: [],
-  currentStudent: {}
+  currentStudent: {},
+  newStudentName: '',
+  newStudentAge: '',
+  newStudentFood: ''
 
   // REDUCER HANDLING
 };const studentReducer = (state = initialState, action) => {
@@ -707,6 +919,18 @@ const initialState = {
 
     case GET_STUDENT:
       return Object.assign({}, state, { currentStudent: action.student });
+
+    case NEW_STUDENT_NAME:
+      return Object.assign({}, state, { newStudentName: action.name });
+
+    case NEW_STUDENT_AGE:
+      return Object.assign({}, state, { newStudentAge: action.age });
+
+    case NEW_STUDENT_FOOD:
+      return Object.assign({}, state, { newStudentFood: action.food });
+
+    case ADD_STUDENT:
+      return Object.assign({}, state, { list: [...state.list, action.student] });
 
     default:
       return state;

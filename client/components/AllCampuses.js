@@ -8,10 +8,15 @@ class AllCampuses extends Component {
 
   constructor (props) {
     super(props);
+    this.buttonClick = this.buttonClick.bind(this);
   }
 
   componentDidMount () {
     this.props.fetchCampuses();
+  }
+
+  buttonClick () {
+    this.props.history.goBack();
   }
 
   render () {
@@ -27,14 +32,16 @@ class AllCampuses extends Component {
             <li key={campus.id}><Link to={`/campuses/${campus.id}`} >{campus.name}</Link></li>
           ))}
          </ul>
+         <button onClick={this.buttonClick} >Back</button>
        </div>
       )
     )
   }
 }
 
-const mapStateToProps = state => ({
-  campuses: state.campuses.list
+const mapStateToProps = (state, ownProps) => ({
+  campuses: state.campuses.list,
+  history: ownProps.history,
 });
 
 const mapDispatchToProps = dispatch => ({

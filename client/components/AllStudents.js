@@ -7,10 +7,15 @@ class AllStudents extends Component {
 
   constructor (props) {
     super(props);
+    this.buttonClick = this.buttonClick.bind(this);
   }
 
   componentDidMount () {
     this.props.fetchStudents();
+  }
+
+  buttonClick () {
+    this.props.history.goBack();
   }
 
   render () {
@@ -27,14 +32,20 @@ class AllStudents extends Component {
             )
           )) }
         </ul>
-
+        <button onClick={this.buttonClick} >Back</button>
+        <button id='create-button'>
+          <Link to='/new-student-form' >
+            Add a new student!
+          </Link>
+        </button>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  students: state.students.list
+const mapStateToProps = (state, ownProps) => ({
+  students: state.students.list,
+  history: ownProps.history,
 });
 
 const mapDispatchToProps = dispatch => ({

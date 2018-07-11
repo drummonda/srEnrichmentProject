@@ -4,6 +4,7 @@ import axios from 'axios';
 export const GET_CAMPUSES_FROM_SERVER = 'GET_CAMPUSES_FROM_SERVER';
 export const GET_CAMPUSES = 'GET_CAMPUSES';
 export const SET_CAMPUS = 'SET_CAMPUS';
+export const ADD_CAMPUS = 'ADD_CAMPUS';
 
 // ACTION CREATORS
 const getCampuses = campuses => ({
