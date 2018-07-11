@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
+import {NavLink} from 'react-router-dom'
 
 export default class Navbar extends Component {
 
   render () {
     return (
+
       <nav id="navbar">
-        <div>Option 1</div>
-        <div>Option 2</div>
+        <NavLink class='nav-link' to='/students'>Students</NavLink>
+        <NavLink class='nav-link' to='/campuses'>Campuses</NavLink>
       </nav>
     )
   }

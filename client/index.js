@@ -3,13 +3,18 @@ import ReactDOM from 'react-dom'
 import App from './components/App'
 import Navbar from './components/Navbar'
 import {HashRouter, Route, Switch} from 'react-router-dom'
+import {Provider} from 'react-redux'
+import store from './store'
+
 
 ReactDOM.render(
-  <HashRouter>
-    <div id='container'>
-      <Navbar/>
-      <App />
-    </div>
-  </HashRouter>,
+  <Provider store={store}>
+    <HashRouter>
+      <div id='container'>
+        <Navbar/>
+        <App />
+      </div>
+    </HashRouter>
+  </Provider>,
   document.getElementById('app')
 )

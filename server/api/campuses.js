@@ -1,9 +1,15 @@
 const router = require('express').Router()
-const {Campus} = require('../db')
+const {Campus, Student} = require('../db')
 
 router.get('/', async (req, res, next) => {
-  const allCampuses = await Campus.findAll();
-  res.json(allCampuses)
+  const allCampuses = await Campus.findAll({ include: [Student] });
+  res.json(allCampuses);
+});
+
+router.get('/:campusId', async (req, res, next) => {
+  const campusId = req.params.campusId;
+  const campus = await Campus.findById(campusId, { include: [Student] });
+  res.json(campus);
 })
 
 router.post('/', async (req, res, next) => {
