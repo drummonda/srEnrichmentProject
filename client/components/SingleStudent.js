@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchStudent} from '../reducers/studentReducer'
+import {Link} from 'react-router-dom'
+import {fetchStudent, deleteStudent} from '../reducers/studentReducer'
+import {fetchCampuses} from '../reducers/campusReducer'
 import UpdateStudentForm from './UpdateStudentForm'
 const JSON = require('circular-json');
 
@@ -9,11 +11,13 @@ class SingleStudent extends Component {
   constructor (props) {
     super(props);
     this.buttonClick = this.buttonClick.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount () {
     const studentId = Number(this.props.studentToSet)
     this.props.fetchStudent(studentId);
+    this.props.fetchCampuses();
   }
 
   componentDidUpdate (prevProps) {
@@ -29,8 +33,15 @@ class SingleStudent extends Component {
     this.props.history.goBack();
   }
 
+  handleDelete () {
+    const studentId = Number(this.props.studentToSet);
+    this.props.deleteStudent(studentId);
+  }
+
   render () {
-    const {currentStudent} = this.props;
+    const {currentStudent, campuses} = this.props;
+    console.log(campuses);
+    const currentCampus = campuses.find(campus => campus.id === currentStudent.campusId);
 
     return (
       (currentStudent.name ?
@@ -38,7 +49,14 @@ class SingleStudent extends Component {
         <h2>{currentStudent.name}</h2>
         <h3>Age: {currentStudent.age}</h3>
         <h3>Favorite Food: {currentStudent.favorite_food}</h3>
-        <UpdateStudentForm studentId={currentStudent.id} />
+        <h3>Attends: { currentCampus ? currentCampus.name : "No fucking campus!" }
+        </h3>
+        <button onClick={this.handleDelete} >Fucking Delete!!!</button>
+        <button id='edit-button'>
+          <Link to={`/students/${currentStudent.id}/edit`} >
+            Fuckin' Edit!
+          </Link>
+        </button>
         <button onClick={this.buttonClick} >Back</button>
        </div>
        :
@@ -52,11 +70,14 @@ class SingleStudent extends Component {
 const mapStateToProps = (state, ownProps) => ({
   studentToSet: ownProps.match.params.studentId,
   currentStudent: state.students.currentStudent,
+  campuses: state.campuses.list,
   history: ownProps.history,
 });
 
-const mapDispatchToProps = dispatch => ({
-  fetchStudent: (studentId) => dispatch(fetchStudent(studentId))
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  fetchStudent: (studentId) => dispatch(fetchStudent(studentId)),
+  fetchCampuses: () => dispatch(fetchCampuses()),
+  deleteStudent: (studentId) => dispatch(deleteStudent(studentId, ownProps.history))
 })
 
 const SingleStudentContainer = connect(mapStateToProps, mapDispatchToProps)(SingleStudent);

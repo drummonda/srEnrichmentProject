@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import {Link, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {studentNameForm, studentAgeForm, studentFoodForm, makeImageUrl, putStudent} from '../reducers/studentReducer'
-const JSON = require('circular-json');
+import {fetchStudent, studentNameForm, studentAgeForm, studentFoodForm, campusForm, makeImageUrl, putStudent} from '../reducers/studentReducer'
+import {fetchCampuses} from '../reducers/campusReducer'
+import CampusSelector from './CampusSelector'
 
 class UpdateStudentForm extends Component {
 
@@ -13,18 +14,13 @@ class UpdateStudentForm extends Component {
     this.clearProps = this.clearProps.bind(this);
     this.buttonClick = this.buttonClick.bind(this);
     this.setFormProps = this.setFormProps.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
   }
 
-  componentDidMount () {
+  async componentDidMount () {
+    await this.props.fetchStudent(this.props.studentId);
+    await this.props.fetchCampuses();
     this.setFormProps();
-  }
-
-  componentDidUpdate (prevProps) {
-    const { studentId, currentStudent } = this.props;
-    const prevStudent = prevProps.currentStudent;
-    if (JSON.stringify(prevStudent) !== JSON.stringify(currentStudent)) {
-      this.setFormProps();
-    }
   }
 
   handleChange (event) {
@@ -41,13 +37,20 @@ class UpdateStudentForm extends Component {
 
   handleSubmit (event) {
     event.preventDefault();
-    const { name, age, food, currentStudent } = this.props;
+    const { name, age, food, currentStudent, campusId } = this.props;
     const id = currentStudent.id;
     const image_url = makeImageUrl(name);
-    const studentToSend = { id, name, age, food, image_url };
+    console.log(campusId);
+    const studentToSend = { id, name, age, food, image_url, campusId };
     console.log('do I get here 1', studentToSend);
     this.props.putStudent(studentToSend);
     this.clearProps();
+  }
+
+  handleSelect (event) {
+    const campusId = Number(event.target.value);
+    console.log(campusId);
+    this.props.campusForm(campusId);
   }
 
   clearProps () {
@@ -62,16 +65,17 @@ class UpdateStudentForm extends Component {
 
   setFormProps () {
     const { currentStudent } = this.props;
-    console.log("This is the currentStudent:", currentStudent);
     this.props.studentNameForm(currentStudent.name);
     this.props.studentAgeForm(currentStudent.age);
     this.props.studentFoodForm(currentStudent.favorite_food);
   }
 
   render () {
-    const {name, age, food } = this.props;
+    const {name, age, food, currentStudent, campuses} = this.props;
+    const currentCampus = campuses.find(campus => campus.id === currentStudent.campusId);
 
     return (
+      (currentStudent.name ?
       <div className='create-form' id='create-campus-form'>
         <h2>Cody's fucking student update form</h2>
         <form onSubmit={(event) => this.handleSubmit(event)}>
@@ -84,9 +88,12 @@ class UpdateStudentForm extends Component {
           <label>Student Favorite Food</label>
           <input type='text' name='food' value={food} onChange={this.handleChange} />
 
+          <CampusSelector currentCampus={currentCampus} campuses={campuses} handleSelect={this.handleSelect}/>
           <button >Fuckin' Update!</button>
         </form>
       </div>
+      :
+      <h1>I'm fucking loading, chill!</h1>)
     )
   }
 }
@@ -95,16 +102,21 @@ const mapStateToProps = (state, ownProps) => ({
   name: state.students.studentNameForm,
   age: state.students.studentAgeForm,
   food: state.students.studentFoodForm,
+  campusId: state.students.campusId,
   currentStudent: state.students.currentStudent,
-  studentId: ownProps.studentId,
+  campuses: state.campuses.list,
+  studentId: Number(ownProps.match.params.studentId),
   history: ownProps.history
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   studentNameForm: name => dispatch(studentNameForm(name)),
   studentAgeForm: age => dispatch(studentAgeForm(age)),
   studentFoodForm: food => dispatch(studentFoodForm(food)),
-  putStudent: student => dispatch(putStudent(student)),
+  campusForm: campusId => dispatch(campusForm(campusId)),
+  putStudent: student => dispatch(putStudent(student, ownProps.history)),
+  fetchStudent: studentId => dispatch(fetchStudent(studentId)),
+  fetchCampuses: () => dispatch(fetchCampuses()),
 });
 
 const UpdateStudentContainer = connect(mapStateToProps, mapDispatchToProps)(UpdateStudentForm);

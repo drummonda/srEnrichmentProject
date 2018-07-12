@@ -9,6 +9,7 @@ export const UPDATE_STUDENT = 'UPDATE_STUDENT';
 export const STUDENT_NAME_FORM = 'STUDENT_NAME_FORM';
 export const STUDENT_AGE_FORM = 'STUDENT_AGE_FORM';
 export const STUDENT_FOOD_FORM = 'STUDENT_FOOD_FORM';
+export const CAMPUS_FORM = 'CAMPUS_FORM';
 
 // ACTION CREATORS
 export const getStudents = students => ({
@@ -29,21 +30,26 @@ export const addStudent = student => ({
 export const updateStudent = updatedStudent => ({
   type: UPDATE_STUDENT,
   updatedStudent
-})
+});
 
 export const studentNameForm = name => ({
   type: STUDENT_NAME_FORM,
   name
-})
+});
 
 export const studentAgeForm = age => ({
   type: STUDENT_AGE_FORM,
   age
-})
+});
 
 export const studentFoodForm = food => ({
   type: STUDENT_FOOD_FORM,
   food
+});
+
+export const campusForm = campusId => ({
+  type: CAMPUS_FORM,
+  campusId
 })
 
 
@@ -73,14 +79,17 @@ export const postStudent = student => async dispatch => {
   dispatch(addStudent(gotStudent));
 };
 
-export const putStudent = studentToUpdate => async dispatch => {
-  console.log('do I get here 2');
-  console.log('student being sent:', studentToUpdate);
+export const putStudent = (studentToUpdate, history) => async dispatch => {
   const response = await axios.put(`/api/students/${studentToUpdate.id}`, studentToUpdate);
   const gotStudent = response.data;
-  console.log(gotStudent);
   dispatch(updateStudent(gotStudent));
+  history.push(`/students/${studentToUpdate.id}`);
 };
+
+export const deleteStudent = (studentIdToDelete, history) => async dispatch => {
+  await axios.delete(`/api/students/${studentIdToDelete}`);
+  history.push('/students');
+}
 
 // HELPER FUNCTIONS
 export const makeImageUrl = studentName => {
@@ -95,6 +104,7 @@ const initialState = {
   studentNameForm: '',
   studentAgeForm: '',
   studentFoodForm: '',
+  campusId: 0,
 }
 
 // REDUCER HANDLING
@@ -114,6 +124,9 @@ const studentReducer = (state = initialState, action) => {
 
     case STUDENT_FOOD_FORM:
       return Object.assign({}, state, {studentFoodForm: action.food});
+
+    case CAMPUS_FORM:
+      return Object.assign({}, state, {campusId: action.campusId});
 
     case ADD_STUDENT:
       return Object.assign({}, state, {list: [...state.list, action.student]});

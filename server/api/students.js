@@ -43,26 +43,59 @@ router.post('/', async (req, res, next) => {
 // Update one student at /api/students/:studentId
 router.put('/:studentId', async (req, res, next) => {
   try {
-    console.log("do I get here 3");
     const studentUpdates = req.body;
-    console.log("student to update:", studentUpdates)
     const studentToUpdate = await Student.findById(req.params.studentId);
-    console.log("student to update:", studentToUpdate)
-    studentToUpdate.update({
+    const updatedStudent = await studentToUpdate.update({
       name: studentUpdates.name,
       age: studentUpdates.age,
       favorite_food: studentUpdates.food,
-      image_url: studentUpdates.image_url
+      image_url: studentUpdates.image_url,
+      campusId: studentUpdates.campusId
     })
-      .then(student => res.json(student))
-      .catch(next)
+    console.log(updatedStudent);
+    res.json(updatedStudent);
   } catch (err) {
     next(err);
   }
-})
+});
 
-router.delete('/', async (req, res, next) => {
-  res.send("Going to put the delete route here")
-})
+// Update campus for student at /api/students/:studentId
+router.put('/addCampus/:studentId', async (req, res, next) => {
+  try {
+    console.log(req.body);
+    const campusId = req.body.id;
+    const studentToUpdate = await Student.findById(req.params.studentId);
+    const updatedStudent = await studentToUpdate.update({
+      campusId: campusId
+    })
+    res.json(updatedStudent);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Update campus for student at /api/students/:studentId
+router.put('/removeCampus/:studentId', async (req, res, next) => {
+  try {
+    const studentToUpdate = await Student.findById(req.params.studentId);
+    const updatedStudent = await studentToUpdate.update({
+      campusId: null,
+    })
+    res.json(updatedStudent);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Delete one student at /api/students/:studentId
+router.delete('/:studentId', async (req, res, next) => {
+  try {
+    const studentToDelete = await Student.findById(req.params.studentId);
+    await studentToDelete.destroy();
+    res.sendStatus(202);
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = router

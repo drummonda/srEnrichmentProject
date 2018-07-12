@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Link, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {campusNameForm, campusLocationForm, campusHeadmasterForm, makeEmail, makeImageUrl, putCampus} from '../reducers/campusReducer'
+import {campusNameForm, campusLocationForm, campusHeadmasterForm, makeEmail, makeImageUrl, putCampus, fetchCampus} from '../reducers/campusReducer'
 
 class UpdateCampusForm extends Component {
 
@@ -14,16 +14,9 @@ class UpdateCampusForm extends Component {
     this.setFormProps = this.setFormProps.bind(this);
   }
 
-  componentDidMount () {
+  async componentDidMount () {
+    await this.props.fetchCampus(this.props.campusId);
     this.setFormProps();
-  }
-
-  componentDidUpdate (prevProps) {
-    const { campusId, currentCampus } = this.props;
-    const prevCampus = prevProps.currentCampus;
-    if (JSON.stringify(prevCampus) !== JSON.stringify(currentCampus)) {
-      this.setFormProps();
-    }
   }
 
   handleChange (event) {
@@ -82,7 +75,7 @@ class UpdateCampusForm extends Component {
           <label>Campus Headmaster</label>
           <input type='text' name='headmaster' value={headmaster} onChange={this.handleChange} />
 
-          <button >Create!</button>
+          <button >Fuckin' Update!</button>
         </form>
       </div>
     )
@@ -94,15 +87,16 @@ const mapStateToProps = (state, ownProps) => ({
   location: state.campuses.campusLocationForm,
   headmaster: state.campuses.campusHeadmasterForm,
   currentCampus: state.campuses.currentCampus,
-  campusId: ownProps.campusId,
+  campusId: Number(ownProps.match.params.campusId),
   history: ownProps.history
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   campusNameForm: name => dispatch(campusNameForm(name)),
   campusLocationForm: location => dispatch(campusLocationForm(location)),
   campusHeadmasterForm: headmaster => dispatch(campusHeadmasterForm(headmaster)),
-  putCampus: campus => dispatch(putCampus(campus)),
+  putCampus: campus => dispatch(putCampus(campus, ownProps.history)),
+  fetchCampus: campusId => dispatch(fetchCampus(campusId)),
 });
 
 const UpdateCampusContainer = connect(mapStateToProps, mapDispatchToProps)(UpdateCampusForm);

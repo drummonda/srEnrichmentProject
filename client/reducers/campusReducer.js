@@ -9,6 +9,9 @@ export const UPDATE_CAMPUS = 'UPDATE_CAMPUS';
 export const CAMPUS_NAME_FORM = 'CAMPUS_NAME_FORM';
 export const CAMPUS_LOCATION_FORM = 'CAMPUS_LOCATION_FORM';
 export const CAMPUS_HEADMASTER_FORM = 'CAMPUS_HEADMASTER_FORM';
+export const STUDENT_FORM = 'STUDENT_FORM';
+export const ADD_STUDENT = 'ADD_STUDENT';
+export const DELETE_STUDENT = 'DELETE_STUDENT';
 
 // ACTION CREATORS
 const getCampuses = campuses => ({
@@ -44,7 +47,22 @@ export const campusHeadmasterForm = headmaster => ({
 export const campusLocationForm = location => ({
   type: CAMPUS_LOCATION_FORM,
   location
-})
+});
+
+export const studentForm = studentId => ({
+  type: STUDENT_FORM,
+  studentId,
+});
+
+export const addStudentToState = student => ({
+  type: ADD_STUDENT,
+  student
+});
+
+export const deleteStudentFromState = student => ({
+  type: DELETE_STUDENT,
+  student,
+});
 
 // THUNK MIDDLEWARE
 export const fetchCampuses = () => {
@@ -54,7 +72,7 @@ export const fetchCampuses = () => {
     const action = getCampuses(campuses);
     dispatch(action);
   }
-}
+};
 
 export const fetchCampus = (campusId) => {
   return async dispatch => {
@@ -63,7 +81,7 @@ export const fetchCampus = (campusId) => {
     const action = getCampus(campus);
     dispatch(action);
   }
-}
+};
 
 export const postCampus = campus => async dispatch => {
   const response = await axios.post('/api/campuses', campus);
@@ -71,11 +89,27 @@ export const postCampus = campus => async dispatch => {
   dispatch(addCampus(gotCampus));
 };
 
-export const putCampus = campus => async dispatch => {
+export const putCampus = (campus, history) => async dispatch => {
   const response = await axios.put(`/api/campuses/${campus.id}`, campus);
   const gotCampus = response.data;
   dispatch(updateCampus(gotCampus));
+  history.push(`/campuses/${campus.id}`)
 };
+
+export const deleteCampus = (campusIdToDelete, history) => async dispatch => {
+  await axios.delete(`/api/campuses/${campusIdToDelete}`);
+  history.push('/campuses');
+};
+
+export const addStudent = (studentId, campusId) => async dispatch => {
+  const studentToAdd = await axios.put(`/api/students/addCampus/${studentId}`, { id: campusId });
+  dispatch(addStudentToState(studentToAdd));
+};
+
+export const removeStudent = studentId => async dispatch => {
+  const studentToRemove = await axios.put(`/api/students/removeCampus/${studentId}`);
+  dispatch(deleteStudentFromState(studentId));
+}
 
 
 // HELPER FUNCTIONS
@@ -98,6 +132,7 @@ const initialState = {
   campusNameForm: '',
   campusLocationForm: '',
   campusHeadmasterForm: '',
+  studentIdToAdd: 0,
 }
 
 // REDUCER HANDLING
@@ -118,6 +153,19 @@ const campusReducer = (state = initialState, action) => {
 
     case CAMPUS_LOCATION_FORM:
       return Object.assign({}, state, {campusLocationForm: action.location});
+
+    case STUDENT_FORM:
+      return Object.assign({}, state, {studentIdToAdd: action.studentId});
+
+    case ADD_STUDENT:
+      let currentCampus = state.currentCampus;
+      let updatedCurrentCampus = Object.assign({}, currentCampus, {students: [...currentCampus.students, action.student]});
+      return Object.assign({}, state, {currentCampus: updatedCurrentCampus});
+
+    case DELETE_STUDENT:
+      let currentCampusStudents = state.currentCampus.students.filter(student => student.id !== action.student);
+      let updateCurrentCampus = Object.assign({}, state.currentCampus, {students: currentCampusStudents});
+      return Object.assign({}, state, {currentCampus: updateCurrentCampus});
 
     case ADD_CAMPUS:
       return Object.assign({}, state, {list: [...state.list, action.campus]});

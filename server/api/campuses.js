@@ -59,8 +59,20 @@ router.put('/:campusId', async (req, res, next) => {
   }
 })
 
-router.delete('/', async (req, res, next) => {
-  res.send("Going to put the delete route here")
+// Delete one campus at /api/campuses/:campusId
+router.delete('/:campusId', async (req, res, next) => {
+  try {
+    const campusId = req.params.campusId;
+    const campusToDelete = await Campus.findById(campusId);
+    await Student.update(
+      { campusId: null },
+      { where: { campusId }
+    });
+    await campusToDelete.destroy();
+    res.sendStatus(202);
+  } catch(err) {
+    next(err);
+  }
 })
 
 module.exports = router

@@ -4,8 +4,10 @@ import AllStudents from './AllStudents';
 import AllCampuses from './AllCampuses';
 import SingleCampus from './SingleCampus';
 import SingleStudent from './SingleStudent';
-import CreateStudentForm from './CreateStudentForm'
-import CreateCampusForm from './CreateCampusForm'
+import CreateStudentForm from './CreateStudentForm';
+import CreateCampusForm from './CreateCampusForm';
+import UpdateCampusForm from './UpdateCampusForm';
+import UpdateStudentForm from './UpdateStudentForm';
 
 export default class App extends Component {
 
@@ -17,8 +19,11 @@ export default class App extends Component {
         <Route exact path='/campuses' component={AllCampuses}/>
         <Route path='/new-student-form' component={CreateStudentForm} />
         <Route path='/new-campus-form' component={CreateCampusForm} />
-        <Route path='/campuses/:campusId' component={SingleCampus}/>
-        <Route path='/students/:studentId' component={SingleStudent} />
+        <Route exact path='/campuses/:campusId' component={SingleCampus}/>
+        <Route exact path='/students/:studentId' component={SingleStudent} />
+        <Route exact path='/students/:studentId/edit' component={UpdateStudentForm} />
+        <Route exact path='/campuses/:campusId/edit' component={UpdateCampusForm} />
+
       </div>
     )
   }
