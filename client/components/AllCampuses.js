@@ -33,6 +33,11 @@ class AllCampuses extends Component {
           ))}
          </ul>
          <button onClick={this.buttonClick} >Back</button>
+         <button id='create-button'>
+          <Link to='/new-campus-form' >
+            Add a new campus!
+          </Link>
+        </button>
        </div>
       )
     )

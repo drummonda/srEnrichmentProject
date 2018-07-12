@@ -1,74 +1,89 @@
 import React, {Component} from 'react'
 import {Link, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {newStudentName, newStudentAge, newStudentFood, postStudent} from '../reducers/studentReducer'
+import {newCampusName, newCampusLocation, newCampusHeadmaster, makeEmail, makeImageUrl, postCampus} from '../reducers/campusReducer'
 
-class CreateStudentForm extends Component {
+class CreateCampusForm extends Component {
 
   constructor (props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.clearProps = this.clearProps.bind(this);
+    this.buttonClick = this.buttonClick.bind(this);
   }
 
   handleChange (event) {
     const value = event.target.value;
     const name = event.target.name;
     if(name === 'name') {
-      this.props.newStudentName(value);
-    } else if (name === 'age') {
-      this.props.newStudentAge(value);
-    } else if (name === 'food') {
-      this.props.newStudentFood(value);
+      this.props.newCampusName(value);
+    } else if (name === 'location') {
+      this.props.newCampusLocation(value);
+    } else if (name === 'headmaster') {
+      this.props.newCampusHeadmaster(value);
     }
   }
 
   handleSubmit (event) {
     event.preventDefault();
-    const {name, age, food} = this.props;
-    const student = { name, age, food };
-    this.props.postStudent(student);
-    this.props.newStudentName('');
-    this.props.newStudentAge('');
-    this.props.newStudentFood('');
+    const {name, location, headmaster} = this.props;
+    const headmaster_email = makeEmail(name, headmaster);
+    const image_url = makeImageUrl(name);
+    const campus = { name, location, headmaster, headmaster_email, image_url };
+    this.props.postCampus(campus);
+    this.clearProps();
+    <Redirect to='/campuses' />
+  }
+
+  clearProps () {
+    this.props.newCampusName('');
+    this.props.newCampusHeadmaster('');
+    this.props.newCampusLocation('');
+  }
+
+  buttonClick () {
+    this.props.history.goBack();
   }
 
   render () {
-    const {name, age, food} = this.props;
+    const {name, location, headmaster} = this.props;
 
     return (
-      <div className='form' id='create-student-form'>
-        <h2>Cody's fucking student creation form</h2>
+      <div className='create-form' id='create-campus-form'>
+        <h2>Cody's fucking campus creation form</h2>
         <form onSubmit={this.handleSubmit}>
-          <label>Student Name</label>
+          <label>Campus Name</label>
           <input type='text' name='name' value={name} onChange={this.handleChange} />
 
-          <label>Student Age</label>
-          <input type='text' name='age' value={age}  onChange={this.handleChange} />
+          <label>Campus Location</label>
+          <input type='text' name='location' value={location}  onChange={this.handleChange} />
 
-          <label>Favorite Food</label>
-          <input type='text' name='food' value={food} onChange={this.handleChange} />
+          <label>Campus Headmaster</label>
+          <input type='text' name='headmaster' value={headmaster} onChange={this.handleChange} />
 
           <button >Create!</button>
         </form>
+        <button onClick={this.buttonClick} >Back</button>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  name: state.students.newStudentName,
-  age: state.students.newStudentAge,
-  food: state.students.newStudentFood,
+const mapStateToProps = (state, ownProps) => ({
+  name: state.campuses.newCampusName,
+  location: state.campuses.newCampusLocation,
+  headmaster: state.campuses.newCampusHeadmaster,
+  history: ownProps.history
 });
 
 const mapDispatchToProps = dispatch => ({
-  newStudentName: name => dispatch(newStudentName(name)),
-  newStudentAge: age => dispatch(newStudentAge(age)),
-  newStudentFood: food => dispatch(newStudentFood(food)),
-  postStudent: student => dispatch(postStudent(student)),
+  newCampusName: name => dispatch(newCampusName(name)),
+  newCampusLocation: location => dispatch(newCampusLocation(location)),
+  newCampusHeadmaster: headmaster => dispatch(newCampusHeadmaster(headmaster)),
+  postCampus: campus => dispatch(postCampus(campus)),
 });
 
-const CreateStudentContainer = connect(mapStateToProps, mapDispatchToProps)(CreateStudentForm);
+const CreateCampusContainer = connect(mapStateToProps, mapDispatchToProps)(CreateCampusForm);
 
-export default CreateStudentContainer
+export default CreateCampusContainer

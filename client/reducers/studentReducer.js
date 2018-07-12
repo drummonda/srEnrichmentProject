@@ -67,6 +67,12 @@ export const postStudent = student => async dispatch => {
   dispatch(addStudent(gotStudent));
 };
 
+// HELPER FUNCTIONS
+export const makeImageUrl = studentName => {
+  const studentNameLowercase = studentName.split(' ').join('').toLowerCase();
+  return `${studentNameLowercase}.jpg`
+}
+
 // INITIAL STATE
 const initialState = {
   list: [],

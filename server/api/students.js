@@ -31,7 +31,7 @@ router.post('/', async (req, res, next) => {
         name: student.name,
         age: student.age,
         favorite_food: student.food,
-        image_url: `${student.name}.jpg`,
+        image_url: student.image_url,
       }
     });
     res.json(newStudent);

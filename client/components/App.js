@@ -5,6 +5,7 @@ import AllCampuses from './AllCampuses';
 import SingleCampus from './SingleCampus';
 import SingleStudent from './SingleStudent';
 import CreateStudentForm from './CreateStudentForm'
+import CreateCampusForm from './CreateCampusForm'
 
 export default class App extends Component {
 
@@ -15,6 +16,7 @@ export default class App extends Component {
         <Route exact path='/students' component={AllStudents}/>
         <Route exact path='/campuses' component={AllCampuses}/>
         <Route path='/new-student-form' component={CreateStudentForm} />
+        <Route path='/new-campus-form' component={CreateCampusForm} />
         <Route path='/campuses/:campusId' component={SingleCampus}/>
         <Route path='/students/:studentId' component={SingleStudent} />
       </div>

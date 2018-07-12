@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Link, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {newStudentName, newStudentAge, newStudentFood, postStudent} from '../reducers/studentReducer'
+import {newStudentName, newStudentAge, newStudentFood, makeImageUrl, postStudent} from '../reducers/studentReducer'
 
 class CreateStudentForm extends Component {
 
@@ -9,6 +9,8 @@ class CreateStudentForm extends Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.clearProps = this.clearProps.bind(this);
+    this.buttonClick = this.buttonClick.bind(this);
   }
 
   handleChange (event) {
@@ -26,18 +28,28 @@ class CreateStudentForm extends Component {
   handleSubmit (event) {
     event.preventDefault();
     const {name, age, food} = this.props;
-    const student = { name, age, food };
+    const image_url = makeImageUrl(name);
+    const student = { name, age, food, image_url };
     this.props.postStudent(student);
+    this.clearProps();
+    this.props.history.push('/students')
+  }
+
+  clearProps () {
     this.props.newStudentName('');
     this.props.newStudentAge('');
     this.props.newStudentFood('');
+  }
+
+  buttonClick () {
+    this.props.history.goBack();
   }
 
   render () {
     const {name, age, food} = this.props;
 
     return (
-      <div className='form' id='create-student-form'>
+      <div className='create-form' id='create-student-form'>
         <h2>Cody's fucking student creation form</h2>
         <form onSubmit={this.handleSubmit}>
           <label>Student Name</label>
@@ -51,15 +63,17 @@ class CreateStudentForm extends Component {
 
           <button >Create!</button>
         </form>
+        <button onClick={this.buttonClick} >Back</button>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
   name: state.students.newStudentName,
   age: state.students.newStudentAge,
   food: state.students.newStudentFood,
+  history: ownProps.history
 });
 
 const mapDispatchToProps = dispatch => ({
