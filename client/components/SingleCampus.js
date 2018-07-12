@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchCampus} from '../reducers/campusReducer'
 import StudentList from './StudentList'
+import UpdateCampusForm from './UpdateCampusForm'
 
 class SingleCampus extends Component {
 
@@ -13,6 +14,15 @@ class SingleCampus extends Component {
   componentDidMount () {
     const campusId = Number(this.props.campusToSet)
     this.props.fetchCampus(campusId);
+  }
+
+  componentDidUpdate (prevProps) {
+    const campusId = Number(this.props.campusToSet);
+    const prevCampus = prevProps.currentCampus;
+    const {currentCampus} = this.props;
+    if (JSON.stringify(prevCampus) !== JSON.stringify(currentCampus)) {
+      this.props.fetchCampus(campusId);
+    }
   }
 
   buttonClick () {
@@ -30,6 +40,7 @@ class SingleCampus extends Component {
         <h3>Location: {campus.location}</h3>
         <h3>Headmaster: {campus.headmaster}</h3>
         <StudentList students={campus.students} campusId={campus.id}/>
+        <UpdateCampusForm campusId={campus.id} />
         <button onClick={this.buttonClick} >Back</button>
        </div>
        :

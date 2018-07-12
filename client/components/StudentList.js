@@ -10,15 +10,16 @@ const StudentList = ({students, campusId}) => {
     <div className='student-list'>
       <h2>Cody's fucking students</h2>
       <ul>
-        {students.length &&
+        {students ?
           (students.map(student => (
             <li key={student.id}>
               <Link to={`/students/${student.id}`} >
                 {student.name}
               </Link>
             </li>
-          )
-        )) }
+          )))
+          :
+          <h2>No students in this fucking campus yet!</h2> }
       </ul>
     </div>
   )

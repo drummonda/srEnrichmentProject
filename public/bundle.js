@@ -118,6 +118,12 @@ class AllCampuses extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     this.props.fetchCampuses();
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.campuses.length !== prevProps.campuses.length) {
+      this.props.fetchCampuses();
+    }
+  }
+
   buttonClick() {
     this.props.history.goBack();
   }
@@ -208,6 +214,12 @@ class AllStudents extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
   componentDidMount() {
     this.props.fetchStudents();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.students.length !== prevProps.students.length) {
+      this.props.fetchStudents();
+    }
   }
 
   buttonClick() {
@@ -356,11 +368,11 @@ class CreateCampusForm extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     const value = event.target.value;
     const name = event.target.name;
     if (name === 'name') {
-      this.props.newCampusName(value);
+      this.props.campusNameForm(value);
     } else if (name === 'location') {
-      this.props.newCampusLocation(value);
+      this.props.campusLocationForm(value);
     } else if (name === 'headmaster') {
-      this.props.newCampusHeadmaster(value);
+      this.props.campusHeadmasterForm(value);
     }
   }
 
@@ -372,13 +384,13 @@ class CreateCampusForm extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     const campus = { name, location, headmaster, headmaster_email, image_url };
     this.props.postCampus(campus);
     this.clearProps();
-    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], { to: '/campuses' });
+    this.props.history.push('/campuses');
   }
 
   clearProps() {
-    this.props.newCampusName('');
-    this.props.newCampusHeadmaster('');
-    this.props.newCampusLocation('');
+    this.props.campusNameForm('');
+    this.props.campusHeadmasterForm('');
+    this.props.campusLocationForm('');
   }
 
   buttonClick() {
@@ -433,16 +445,16 @@ class CreateCampusForm extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  name: state.campuses.newCampusName,
-  location: state.campuses.newCampusLocation,
-  headmaster: state.campuses.newCampusHeadmaster,
+  name: state.campuses.campusNameForm,
+  location: state.campuses.campusLocationForm,
+  headmaster: state.campuses.campusHeadmasterForm,
   history: ownProps.history
 });
 
 const mapDispatchToProps = dispatch => ({
-  newCampusName: name => dispatch(Object(_reducers_campusReducer__WEBPACK_IMPORTED_MODULE_3__["newCampusName"])(name)),
-  newCampusLocation: location => dispatch(Object(_reducers_campusReducer__WEBPACK_IMPORTED_MODULE_3__["newCampusLocation"])(location)),
-  newCampusHeadmaster: headmaster => dispatch(Object(_reducers_campusReducer__WEBPACK_IMPORTED_MODULE_3__["newCampusHeadmaster"])(headmaster)),
+  campusNameForm: name => dispatch(Object(_reducers_campusReducer__WEBPACK_IMPORTED_MODULE_3__["campusNameForm"])(name)),
+  campusLocationForm: location => dispatch(Object(_reducers_campusReducer__WEBPACK_IMPORTED_MODULE_3__["campusLocationForm"])(location)),
+  campusHeadmasterForm: headmaster => dispatch(Object(_reducers_campusReducer__WEBPACK_IMPORTED_MODULE_3__["campusHeadmasterForm"])(headmaster)),
   postCampus: campus => dispatch(Object(_reducers_campusReducer__WEBPACK_IMPORTED_MODULE_3__["postCampus"])(campus))
 });
 
@@ -485,11 +497,11 @@ class CreateStudentForm extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] 
     const value = event.target.value;
     const name = event.target.name;
     if (name === 'name') {
-      this.props.newStudentName(value);
+      this.props.studentNameForm(value);
     } else if (name === 'age') {
-      this.props.newStudentAge(value);
+      this.props.studentAgeForm(value);
     } else if (name === 'food') {
-      this.props.newStudentFood(value);
+      this.props.studentFoodForm(value);
     }
   }
 
@@ -504,9 +516,9 @@ class CreateStudentForm extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] 
   }
 
   clearProps() {
-    this.props.newStudentName('');
-    this.props.newStudentAge('');
-    this.props.newStudentFood('');
+    this.props.studentNameForm('');
+    this.props.studentAgeForm('');
+    this.props.studentFoodForm('');
   }
 
   buttonClick() {
@@ -561,16 +573,16 @@ class CreateStudentForm extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] 
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  name: state.students.newStudentName,
-  age: state.students.newStudentAge,
-  food: state.students.newStudentFood,
+  name: state.students.studentNameForm,
+  age: state.students.studentAgeForm,
+  food: state.students.studentFoodForm,
   history: ownProps.history
 });
 
 const mapDispatchToProps = dispatch => ({
-  newStudentName: name => dispatch(Object(_reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__["newStudentName"])(name)),
-  newStudentAge: age => dispatch(Object(_reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__["newStudentAge"])(age)),
-  newStudentFood: food => dispatch(Object(_reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__["newStudentFood"])(food)),
+  studentNameForm: name => dispatch(Object(_reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__["studentNameForm"])(name)),
+  studentAgeForm: age => dispatch(Object(_reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__["studentAgeForm"])(age)),
+  studentFoodForm: food => dispatch(Object(_reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__["studentFoodForm"])(food)),
   postStudent: student => dispatch(Object(_reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__["postStudent"])(student))
 });
 
@@ -632,6 +644,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _reducers_campusReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../reducers/campusReducer */ "./client/reducers/campusReducer.js");
 /* harmony import */ var _StudentList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./StudentList */ "./client/components/StudentList.js");
+/* harmony import */ var _UpdateCampusForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./UpdateCampusForm */ "./client/components/UpdateCampusForm.js");
+
 
 
 
@@ -647,6 +661,15 @@ class SingleCampus extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   componentDidMount() {
     const campusId = Number(this.props.campusToSet);
     this.props.fetchCampus(campusId);
+  }
+
+  componentDidUpdate(prevProps) {
+    const campusId = Number(this.props.campusToSet);
+    const prevCampus = prevProps.currentCampus;
+    const { currentCampus } = this.props;
+    if (JSON.stringify(prevCampus) !== JSON.stringify(currentCampus)) {
+      this.props.fetchCampus(campusId);
+    }
   }
 
   buttonClick() {
@@ -678,6 +701,7 @@ class SingleCampus extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         campus.headmaster
       ),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StudentList__WEBPACK_IMPORTED_MODULE_3__["default"], { students: campus.students, campusId: campus.id }),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_UpdateCampusForm__WEBPACK_IMPORTED_MODULE_4__["default"], { campusId: campus.id }),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         'button',
         { onClick: this.buttonClick },
@@ -721,9 +745,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _reducers_studentReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../reducers/studentReducer */ "./client/reducers/studentReducer.js");
+/* harmony import */ var _UpdateStudentForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UpdateStudentForm */ "./client/components/UpdateStudentForm.js");
 
 
 
+
+const JSON = __webpack_require__(/*! circular-json */ "./node_modules/circular-json/build/circular-json.node.js");
 
 class SingleStudent extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
@@ -737,34 +764,43 @@ class SingleStudent extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     this.props.fetchStudent(studentId);
   }
 
+  componentDidUpdate(prevProps) {
+    const studentId = Number(this.props.studentToSet);
+    const prevStudent = prevProps.currentStudent;
+    const { currentStudent } = this.props;
+    if (JSON.stringify(prevStudent) !== JSON.stringify(currentStudent)) {
+      this.props.fetchStudent(studentId);
+    }
+  }
+
   buttonClick() {
     this.props.history.goBack();
   }
 
   render() {
-    const student = this.props.currentStudent;
-    console.log("current student: ", student);
+    const { currentStudent } = this.props;
 
-    return student ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+    return currentStudent.name ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       'div',
       { id: 'student' },
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         'h2',
         null,
-        student.name
+        currentStudent.name
       ),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         'h3',
         null,
         'Age: ',
-        student.age
+        currentStudent.age
       ),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         'h3',
         null,
         'Favorite Food: ',
-        student.favorite_food
+        currentStudent.favorite_food
       ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_UpdateStudentForm__WEBPACK_IMPORTED_MODULE_3__["default"], { studentId: currentStudent.id }),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         'button',
         { onClick: this.buttonClick },
@@ -781,8 +817,8 @@ class SingleStudent extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
 const mapStateToProps = (state, ownProps) => ({
   studentToSet: ownProps.match.params.studentId,
-  history: ownProps.history,
-  currentStudent: state.students.currentStudent
+  currentStudent: state.students.currentStudent,
+  history: ownProps.history
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -827,7 +863,7 @@ const StudentList = ({ students, campusId }) => {
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       'ul',
       null,
-      students.length && students.map(student => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      students ? students.map(student => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         'li',
         { key: student.id },
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
@@ -835,12 +871,310 @@ const StudentList = ({ students, campusId }) => {
           { to: `/students/${student.id}` },
           student.name
         )
-      ))
+      )) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        'h2',
+        null,
+        'No students in this fucking campus yet!'
+      )
     )
   );
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (StudentList);
+
+/***/ }),
+
+/***/ "./client/components/UpdateCampusForm.js":
+/*!***********************************************!*\
+  !*** ./client/components/UpdateCampusForm.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _reducers_campusReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../reducers/campusReducer */ "./client/reducers/campusReducer.js");
+
+
+
+
+
+class UpdateCampusForm extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
+
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.clearProps = this.clearProps.bind(this);
+    this.buttonClick = this.buttonClick.bind(this);
+    this.setFormProps = this.setFormProps.bind(this);
+  }
+
+  componentDidMount() {
+    this.setFormProps();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { campusId, currentCampus } = this.props;
+    const prevCampus = prevProps.currentCampus;
+    if (JSON.stringify(prevCampus) !== JSON.stringify(currentCampus)) {
+      this.setFormProps();
+    }
+  }
+
+  handleChange(event) {
+    const value = event.target.value;
+    const name = event.target.name;
+    if (name === 'name') {
+      this.props.campusNameForm(value);
+    } else if (name === 'location') {
+      this.props.campusLocationForm(value);
+    } else if (name === 'headmaster') {
+      this.props.campusHeadmasterForm(value);
+    }
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const { name, location, headmaster, currentCampus } = this.props;
+    const id = currentCampus.id;
+    const headmaster_email = Object(_reducers_campusReducer__WEBPACK_IMPORTED_MODULE_3__["makeEmail"])(name, headmaster);
+    const image_url = Object(_reducers_campusReducer__WEBPACK_IMPORTED_MODULE_3__["makeImageUrl"])(name);
+    const campus = { id, name, location, headmaster, headmaster_email, image_url };
+    this.props.putCampus(campus);
+    this.clearProps();
+  }
+
+  clearProps() {
+    this.props.campusNameForm('');
+    this.props.campusHeadmasterForm('');
+    this.props.campusLocationForm('');
+  }
+
+  buttonClick() {
+    this.props.history.goBack();
+  }
+
+  setFormProps() {
+    const { currentCampus } = this.props;
+    this.props.campusNameForm(currentCampus.name);
+    this.props.campusLocationForm(currentCampus.location);
+    this.props.campusHeadmasterForm(currentCampus.headmaster);
+  }
+
+  render() {
+    let { name, location, headmaster } = this.props;
+
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      'div',
+      { className: 'create-form', id: 'create-campus-form' },
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        'h2',
+        null,
+        'Cody\'s fucking campus update form'
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        'form',
+        { onSubmit: event => this.handleSubmit(event) },
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'label',
+          null,
+          'Campus Name'
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('input', { type: 'text', name: 'name', value: name, onChange: this.handleChange }),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'label',
+          null,
+          'Campus Location'
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('input', { type: 'text', name: 'location', value: location, onChange: this.handleChange }),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'label',
+          null,
+          'Campus Headmaster'
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('input', { type: 'text', name: 'headmaster', value: headmaster, onChange: this.handleChange }),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'button',
+          null,
+          'Create!'
+        )
+      )
+    );
+  }
+}
+
+const mapStateToProps = (state, ownProps) => ({
+  name: state.campuses.campusNameForm,
+  location: state.campuses.campusLocationForm,
+  headmaster: state.campuses.campusHeadmasterForm,
+  currentCampus: state.campuses.currentCampus,
+  campusId: ownProps.campusId,
+  history: ownProps.history
+});
+
+const mapDispatchToProps = dispatch => ({
+  campusNameForm: name => dispatch(Object(_reducers_campusReducer__WEBPACK_IMPORTED_MODULE_3__["campusNameForm"])(name)),
+  campusLocationForm: location => dispatch(Object(_reducers_campusReducer__WEBPACK_IMPORTED_MODULE_3__["campusLocationForm"])(location)),
+  campusHeadmasterForm: headmaster => dispatch(Object(_reducers_campusReducer__WEBPACK_IMPORTED_MODULE_3__["campusHeadmasterForm"])(headmaster)),
+  putCampus: campus => dispatch(Object(_reducers_campusReducer__WEBPACK_IMPORTED_MODULE_3__["putCampus"])(campus))
+});
+
+const UpdateCampusContainer = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps, mapDispatchToProps)(UpdateCampusForm);
+
+/* harmony default export */ __webpack_exports__["default"] = (UpdateCampusContainer);
+
+/***/ }),
+
+/***/ "./client/components/UpdateStudentForm.js":
+/*!************************************************!*\
+  !*** ./client/components/UpdateStudentForm.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../reducers/studentReducer */ "./client/reducers/studentReducer.js");
+
+
+
+
+const JSON = __webpack_require__(/*! circular-json */ "./node_modules/circular-json/build/circular-json.node.js");
+
+class UpdateStudentForm extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
+
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.clearProps = this.clearProps.bind(this);
+    this.buttonClick = this.buttonClick.bind(this);
+    this.setFormProps = this.setFormProps.bind(this);
+  }
+
+  componentDidMount() {
+    this.setFormProps();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { studentId, currentStudent } = this.props;
+    const prevStudent = prevProps.currentStudent;
+    if (JSON.stringify(prevStudent) !== JSON.stringify(currentStudent)) {
+      this.setFormProps();
+    }
+  }
+
+  handleChange(event) {
+    const value = event.target.value;
+    const name = event.target.name;
+    if (name === 'name') {
+      this.props.studentNameForm(value);
+    } else if (name === 'age') {
+      this.props.studentAgeForm(value);
+    } else if (name === 'food') {
+      this.props.studentFoodForm(value);
+    }
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const { name, age, food, currentStudent } = this.props;
+    const id = currentStudent.id;
+    const image_url = Object(_reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__["makeImageUrl"])(name);
+    const studentToSend = { id, name, age, food, image_url };
+    console.log('do I get here 1', studentToSend);
+    this.props.putStudent(studentToSend);
+    this.clearProps();
+  }
+
+  clearProps() {
+    this.props.studentNameForm('');
+    this.props.studentAgeForm('');
+    this.props.studentFoodForm('');
+  }
+
+  buttonClick() {
+    this.props.history.goBack();
+  }
+
+  setFormProps() {
+    const { currentStudent } = this.props;
+    console.log("This is the currentStudent:", currentStudent);
+    this.props.studentNameForm(currentStudent.name);
+    this.props.studentAgeForm(currentStudent.age);
+    this.props.studentFoodForm(currentStudent.favorite_food);
+  }
+
+  render() {
+    const { name, age, food } = this.props;
+
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      'div',
+      { className: 'create-form', id: 'create-campus-form' },
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        'h2',
+        null,
+        'Cody\'s fucking student update form'
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        'form',
+        { onSubmit: event => this.handleSubmit(event) },
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'label',
+          null,
+          'Student Name'
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('input', { type: 'text', name: 'name', value: name, onChange: this.handleChange }),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'label',
+          null,
+          'Student Age'
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('input', { type: 'text', name: 'age', value: age, onChange: this.handleChange }),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'label',
+          null,
+          'Student Favorite Food'
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('input', { type: 'text', name: 'food', value: food, onChange: this.handleChange }),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'button',
+          null,
+          'Fuckin\' Update!'
+        )
+      )
+    );
+  }
+}
+
+const mapStateToProps = (state, ownProps) => ({
+  name: state.students.studentNameForm,
+  age: state.students.studentAgeForm,
+  food: state.students.studentFoodForm,
+  currentStudent: state.students.currentStudent,
+  studentId: ownProps.studentId,
+  history: ownProps.history
+});
+
+const mapDispatchToProps = dispatch => ({
+  studentNameForm: name => dispatch(Object(_reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__["studentNameForm"])(name)),
+  studentAgeForm: age => dispatch(Object(_reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__["studentAgeForm"])(age)),
+  studentFoodForm: food => dispatch(Object(_reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__["studentFoodForm"])(food)),
+  putStudent: student => dispatch(Object(_reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__["putStudent"])(student))
+});
+
+const UpdateStudentContainer = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps, mapDispatchToProps)(UpdateStudentForm);
+
+/* harmony default export */ __webpack_exports__["default"] = (UpdateStudentContainer);
 
 /***/ }),
 
@@ -891,7 +1225,7 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_
 /*!******************************************!*\
   !*** ./client/reducers/campusReducer.js ***!
   \******************************************/
-/*! exports provided: GET_CAMPUSES_FROM_SERVER, GET_CAMPUSES, SET_CAMPUS, ADD_CAMPUS, NEW_CAMPUS_NAME, NEW_CAMPUS_LOCATION, NEW_CAMPUS_HEADMASTER, getCampus, addCampus, newCampusName, newCampusHeadmaster, newCampusLocation, fetchCampuses, fetchCampus, postCampus, makeEmail, makeImageUrl, default */
+/*! exports provided: GET_CAMPUSES_FROM_SERVER, GET_CAMPUSES, SET_CAMPUS, ADD_CAMPUS, UPDATE_CAMPUS, CAMPUS_NAME_FORM, CAMPUS_LOCATION_FORM, CAMPUS_HEADMASTER_FORM, getCampus, addCampus, updateCampus, campusNameForm, campusHeadmasterForm, campusLocationForm, fetchCampuses, fetchCampus, postCampus, putCampus, makeEmail, makeImageUrl, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -900,17 +1234,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_CAMPUSES", function() { return GET_CAMPUSES; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_CAMPUS", function() { return SET_CAMPUS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_CAMPUS", function() { return ADD_CAMPUS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NEW_CAMPUS_NAME", function() { return NEW_CAMPUS_NAME; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NEW_CAMPUS_LOCATION", function() { return NEW_CAMPUS_LOCATION; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NEW_CAMPUS_HEADMASTER", function() { return NEW_CAMPUS_HEADMASTER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_CAMPUS", function() { return UPDATE_CAMPUS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CAMPUS_NAME_FORM", function() { return CAMPUS_NAME_FORM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CAMPUS_LOCATION_FORM", function() { return CAMPUS_LOCATION_FORM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CAMPUS_HEADMASTER_FORM", function() { return CAMPUS_HEADMASTER_FORM; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCampus", function() { return getCampus; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addCampus", function() { return addCampus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "newCampusName", function() { return newCampusName; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "newCampusHeadmaster", function() { return newCampusHeadmaster; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "newCampusLocation", function() { return newCampusLocation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateCampus", function() { return updateCampus; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "campusNameForm", function() { return campusNameForm; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "campusHeadmasterForm", function() { return campusHeadmasterForm; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "campusLocationForm", function() { return campusLocationForm; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchCampuses", function() { return fetchCampuses; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchCampus", function() { return fetchCampus; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postCampus", function() { return postCampus; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "putCampus", function() { return putCampus; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "makeEmail", function() { return makeEmail; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "makeImageUrl", function() { return makeImageUrl; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -922,9 +1259,10 @@ const GET_CAMPUSES_FROM_SERVER = 'GET_CAMPUSES_FROM_SERVER';
 const GET_CAMPUSES = 'GET_CAMPUSES';
 const SET_CAMPUS = 'SET_CAMPUS';
 const ADD_CAMPUS = 'ADD_CAMPUS';
-const NEW_CAMPUS_NAME = 'NEW_CAMPUS_NAME';
-const NEW_CAMPUS_LOCATION = 'NEW_CAMPUS_LOCATION';
-const NEW_CAMPUS_HEADMASTER = 'NEW_CAMPUS_HEADMASTER';
+const UPDATE_CAMPUS = 'UPDATE_CAMPUS';
+const CAMPUS_NAME_FORM = 'CAMPUS_NAME_FORM';
+const CAMPUS_LOCATION_FORM = 'CAMPUS_LOCATION_FORM';
+const CAMPUS_HEADMASTER_FORM = 'CAMPUS_HEADMASTER_FORM';
 
 // ACTION CREATORS
 const getCampuses = campuses => ({
@@ -942,18 +1280,23 @@ const addCampus = campus => ({
   campus
 });
 
-const newCampusName = name => ({
-  type: NEW_CAMPUS_NAME,
+const updateCampus = updatedCampus => ({
+  type: UPDATE_CAMPUS,
+  updatedCampus
+});
+
+const campusNameForm = name => ({
+  type: CAMPUS_NAME_FORM,
   name
 });
 
-const newCampusHeadmaster = headmaster => ({
-  type: NEW_CAMPUS_HEADMASTER,
+const campusHeadmasterForm = headmaster => ({
+  type: CAMPUS_HEADMASTER_FORM,
   headmaster
 });
 
-const newCampusLocation = location => ({
-  type: NEW_CAMPUS_LOCATION,
+const campusLocationForm = location => ({
+  type: CAMPUS_LOCATION_FORM,
   location
 });
 
@@ -977,10 +1320,15 @@ const fetchCampus = campusId => {
 };
 
 const postCampus = campus => async dispatch => {
-  console.log(campus);
   const response = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/campuses', campus);
   const gotCampus = response.data;
   dispatch(addCampus(gotCampus));
+};
+
+const putCampus = campus => async dispatch => {
+  const response = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.put(`/api/campuses/${campus.id}`, campus);
+  const gotCampus = response.data;
+  dispatch(updateCampus(gotCampus));
 };
 
 // HELPER FUNCTIONS
@@ -999,9 +1347,9 @@ const makeImageUrl = campusName => {
 const initialState = {
   list: [],
   currentCampus: {},
-  newCampusName: '',
-  newCampusLocation: '',
-  newCampusHeadmaster: ''
+  campusNameForm: '',
+  campusLocationForm: '',
+  campusHeadmasterForm: ''
 
   // REDUCER HANDLING
 };const campusReducer = (state = initialState, action) => {
@@ -1013,17 +1361,20 @@ const initialState = {
       const currentId = Number(action.campusId);
       return Object.assign({}, state, { currentCampus: action.campus });
 
-    case NEW_CAMPUS_NAME:
-      return Object.assign({}, state, { newCampusName: action.name });
+    case CAMPUS_NAME_FORM:
+      return Object.assign({}, state, { campusNameForm: action.name });
 
-    case NEW_CAMPUS_HEADMASTER:
-      return Object.assign({}, state, { newCampusHeadmaster: action.headmaster });
+    case CAMPUS_HEADMASTER_FORM:
+      return Object.assign({}, state, { campusHeadmasterForm: action.headmaster });
 
-    case NEW_CAMPUS_LOCATION:
-      return Object.assign({}, state, { newCampusLocation: action.location });
+    case CAMPUS_LOCATION_FORM:
+      return Object.assign({}, state, { campusLocationForm: action.location });
 
     case ADD_CAMPUS:
       return Object.assign({}, state, { list: [...state.list, action.campus] });
+
+    case UPDATE_CAMPUS:
+      return Object.assign({}, state, { currentCampus: action.updatedCampus });
 
     default:
       return state;
@@ -1038,7 +1389,7 @@ const initialState = {
 /*!*******************************************!*\
   !*** ./client/reducers/studentReducer.js ***!
   \*******************************************/
-/*! exports provided: GET_STUDENTS_FROM_SERVER, GET_STUDENTS, GET_STUDENT, ADD_STUDENT, NEW_STUDENT_NAME, NEW_STUDENT_AGE, NEW_STUDENT_FOOD, getStudents, getStudent, addStudent, newStudentName, newStudentAge, newStudentFood, fetchStudents, fetchStudent, postStudent, makeImageUrl, default */
+/*! exports provided: GET_STUDENTS_FROM_SERVER, GET_STUDENTS, GET_STUDENT, ADD_STUDENT, UPDATE_STUDENT, STUDENT_NAME_FORM, STUDENT_AGE_FORM, STUDENT_FOOD_FORM, getStudents, getStudent, addStudent, updateStudent, studentNameForm, studentAgeForm, studentFoodForm, fetchStudents, fetchStudent, postStudent, putStudent, makeImageUrl, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1047,18 +1398,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_STUDENTS", function() { return GET_STUDENTS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_STUDENT", function() { return GET_STUDENT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_STUDENT", function() { return ADD_STUDENT; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NEW_STUDENT_NAME", function() { return NEW_STUDENT_NAME; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NEW_STUDENT_AGE", function() { return NEW_STUDENT_AGE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NEW_STUDENT_FOOD", function() { return NEW_STUDENT_FOOD; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_STUDENT", function() { return UPDATE_STUDENT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "STUDENT_NAME_FORM", function() { return STUDENT_NAME_FORM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "STUDENT_AGE_FORM", function() { return STUDENT_AGE_FORM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "STUDENT_FOOD_FORM", function() { return STUDENT_FOOD_FORM; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getStudents", function() { return getStudents; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getStudent", function() { return getStudent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addStudent", function() { return addStudent; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "newStudentName", function() { return newStudentName; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "newStudentAge", function() { return newStudentAge; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "newStudentFood", function() { return newStudentFood; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateStudent", function() { return updateStudent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "studentNameForm", function() { return studentNameForm; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "studentAgeForm", function() { return studentAgeForm; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "studentFoodForm", function() { return studentFoodForm; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStudents", function() { return fetchStudents; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStudent", function() { return fetchStudent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postStudent", function() { return postStudent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "putStudent", function() { return putStudent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "makeImageUrl", function() { return makeImageUrl; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
@@ -1069,9 +1423,10 @@ const GET_STUDENTS_FROM_SERVER = 'GET_STUDENTS_FROM_SERVER';
 const GET_STUDENTS = 'GET_STUDENTS';
 const GET_STUDENT = 'GET_STUDENT';
 const ADD_STUDENT = 'ADD_STUDENT';
-const NEW_STUDENT_NAME = 'NEW_STUDENT_NAME';
-const NEW_STUDENT_AGE = 'NEW_STUDENT_AGE';
-const NEW_STUDENT_FOOD = 'NEW_STUDENT_FOOD';
+const UPDATE_STUDENT = 'UPDATE_STUDENT';
+const STUDENT_NAME_FORM = 'STUDENT_NAME_FORM';
+const STUDENT_AGE_FORM = 'STUDENT_AGE_FORM';
+const STUDENT_FOOD_FORM = 'STUDENT_FOOD_FORM';
 
 // ACTION CREATORS
 const getStudents = students => ({
@@ -1089,18 +1444,23 @@ const addStudent = student => ({
   student
 });
 
-const newStudentName = name => ({
-  type: NEW_STUDENT_NAME,
+const updateStudent = updatedStudent => ({
+  type: UPDATE_STUDENT,
+  updatedStudent
+});
+
+const studentNameForm = name => ({
+  type: STUDENT_NAME_FORM,
   name
 });
 
-const newStudentAge = age => ({
-  type: NEW_STUDENT_AGE,
+const studentAgeForm = age => ({
+  type: STUDENT_AGE_FORM,
   age
 });
 
-const newStudentFood = food => ({
-  type: NEW_STUDENT_FOOD,
+const studentFoodForm = food => ({
+  type: STUDENT_FOOD_FORM,
   food
 });
 
@@ -1125,9 +1485,18 @@ const fetchStudent = studentId => {
 
 const postStudent = student => async dispatch => {
   console.log(student);
-  const response = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/students', student);
+  const response = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/students', { student: student });
   const gotStudent = response.data;
   dispatch(addStudent(gotStudent));
+};
+
+const putStudent = studentToUpdate => async dispatch => {
+  console.log('do I get here 2');
+  console.log('student being sent:', studentToUpdate);
+  const response = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.put(`/api/students/${studentToUpdate.id}`, studentToUpdate);
+  const gotStudent = response.data;
+  console.log(gotStudent);
+  dispatch(updateStudent(gotStudent));
 };
 
 // HELPER FUNCTIONS
@@ -1140,9 +1509,9 @@ const makeImageUrl = studentName => {
 const initialState = {
   list: [],
   currentStudent: {},
-  newStudentName: '',
-  newStudentAge: '',
-  newStudentFood: ''
+  studentNameForm: '',
+  studentAgeForm: '',
+  studentFoodForm: ''
 
   // REDUCER HANDLING
 };const studentReducer = (state = initialState, action) => {
@@ -1153,17 +1522,20 @@ const initialState = {
     case GET_STUDENT:
       return Object.assign({}, state, { currentStudent: action.student });
 
-    case NEW_STUDENT_NAME:
-      return Object.assign({}, state, { newStudentName: action.name });
+    case STUDENT_NAME_FORM:
+      return Object.assign({}, state, { studentNameForm: action.name });
 
-    case NEW_STUDENT_AGE:
-      return Object.assign({}, state, { newStudentAge: action.age });
+    case STUDENT_AGE_FORM:
+      return Object.assign({}, state, { studentAgeForm: action.age });
 
-    case NEW_STUDENT_FOOD:
-      return Object.assign({}, state, { newStudentFood: action.food });
+    case STUDENT_FOOD_FORM:
+      return Object.assign({}, state, { studentFoodForm: action.food });
 
     case ADD_STUDENT:
       return Object.assign({}, state, { list: [...state.list, action.student] });
+
+    case UPDATE_STUDENT:
+      return Object.assign({}, state, { currentStudent: action.updatedStudent });
 
     default:
       return state;
@@ -12694,6 +13066,224 @@ __webpack_require__(/*! ./modules/web.timers */ "./node_modules/babel-polyfill/n
 __webpack_require__(/*! ./modules/web.immediate */ "./node_modules/babel-polyfill/node_modules/core-js/modules/web.immediate.js");
 __webpack_require__(/*! ./modules/web.dom.iterable */ "./node_modules/babel-polyfill/node_modules/core-js/modules/web.dom.iterable.js");
 module.exports = __webpack_require__(/*! ./modules/_core */ "./node_modules/babel-polyfill/node_modules/core-js/modules/_core.js");
+
+
+/***/ }),
+
+/***/ "./node_modules/circular-json/build/circular-json.node.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/circular-json/build/circular-json.node.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*!
+Copyright (C) 2013-2017 by Andrea Giammarchi - @WebReflection
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+*/
+var
+  // should be a not so common char
+  // possibly one JSON does not encode
+  // possibly one encodeURIComponent does not encode
+  // right now this char is '~' but this might change in the future
+  specialChar = '~',
+  safeSpecialChar = '\\x' + (
+    '0' + specialChar.charCodeAt(0).toString(16)
+  ).slice(-2),
+  escapedSafeSpecialChar = '\\' + safeSpecialChar,
+  specialCharRG = new RegExp(safeSpecialChar, 'g'),
+  safeSpecialCharRG = new RegExp(escapedSafeSpecialChar, 'g'),
+
+  safeStartWithSpecialCharRG = new RegExp('(?:^|([^\\\\]))' + escapedSafeSpecialChar),
+
+  indexOf = [].indexOf || function(v){
+    for(var i=this.length;i--&&this[i]!==v;);
+    return i;
+  },
+  $String = String  // there's no way to drop warnings in JSHint
+                    // about new String ... well, I need that here!
+                    // faked, and happy linter!
+;
+
+function generateReplacer(value, replacer, resolve) {
+  var
+    doNotIgnore = false,
+    inspect = !!replacer,
+    path = [],
+    all  = [value],
+    seen = [value],
+    mapp = [resolve ? specialChar : '[Circular]'],
+    last = value,
+    lvl  = 1,
+    i, fn
+  ;
+  if (inspect) {
+    fn = typeof replacer === 'object' ?
+      function (key, value) {
+        return key !== '' && replacer.indexOf(key) < 0 ? void 0 : value;
+      } :
+      replacer;
+  }
+  return function(key, value) {
+    // the replacer has rights to decide
+    // if a new object should be returned
+    // or if there's some key to drop
+    // let's call it here rather than "too late"
+    if (inspect) value = fn.call(this, key, value);
+
+    // first pass should be ignored, since it's just the initial object
+    if (doNotIgnore) {
+      if (last !== this) {
+        i = lvl - indexOf.call(all, this) - 1;
+        lvl -= i;
+        all.splice(lvl, all.length);
+        path.splice(lvl - 1, path.length);
+        last = this;
+      }
+      // console.log(lvl, key, path);
+      if (typeof value === 'object' && value) {
+    	// if object isn't referring to parent object, add to the
+        // object path stack. Otherwise it is already there.
+        if (indexOf.call(all, value) < 0) {
+          all.push(last = value);
+        }
+        lvl = all.length;
+        i = indexOf.call(seen, value);
+        if (i < 0) {
+          i = seen.push(value) - 1;
+          if (resolve) {
+            // key cannot contain specialChar but could be not a string
+            path.push(('' + key).replace(specialCharRG, safeSpecialChar));
+            mapp[i] = specialChar + path.join(specialChar);
+          } else {
+            mapp[i] = mapp[0];
+          }
+        } else {
+          value = mapp[i];
+        }
+      } else {
+        if (typeof value === 'string' && resolve) {
+          // ensure no special char involved on deserialization
+          // in this case only first char is important
+          // no need to replace all value (better performance)
+          value = value .replace(safeSpecialChar, escapedSafeSpecialChar)
+                        .replace(specialChar, safeSpecialChar);
+        }
+      }
+    } else {
+      doNotIgnore = true;
+    }
+    return value;
+  };
+}
+
+function retrieveFromPath(current, keys) {
+  for(var i = 0, length = keys.length; i < length; current = current[
+    // keys should be normalized back here
+    keys[i++].replace(safeSpecialCharRG, specialChar)
+  ]);
+  return current;
+}
+
+function generateReviver(reviver) {
+  return function(key, value) {
+    var isString = typeof value === 'string';
+    if (isString && value.charAt(0) === specialChar) {
+      return new $String(value.slice(1));
+    }
+    if (key === '') value = regenerate(value, value, {});
+    // again, only one needed, do not use the RegExp for this replacement
+    // only keys need the RegExp
+    if (isString) value = value .replace(safeStartWithSpecialCharRG, '$1' + specialChar)
+                                .replace(escapedSafeSpecialChar, safeSpecialChar);
+    return reviver ? reviver.call(this, key, value) : value;
+  };
+}
+
+function regenerateArray(root, current, retrieve) {
+  for (var i = 0, length = current.length; i < length; i++) {
+    current[i] = regenerate(root, current[i], retrieve);
+  }
+  return current;
+}
+
+function regenerateObject(root, current, retrieve) {
+  for (var key in current) {
+    if (current.hasOwnProperty(key)) {
+      current[key] = regenerate(root, current[key], retrieve);
+    }
+  }
+  return current;
+}
+
+function regenerate(root, current, retrieve) {
+  return current instanceof Array ?
+    // fast Array reconstruction
+    regenerateArray(root, current, retrieve) :
+    (
+      current instanceof $String ?
+        (
+          // root is an empty string
+          current.length ?
+            (
+              retrieve.hasOwnProperty(current) ?
+                retrieve[current] :
+                retrieve[current] = retrieveFromPath(
+                  root, current.split(specialChar)
+                )
+            ) :
+            root
+        ) :
+        (
+          current instanceof Object ?
+            // dedicated Object parser
+            regenerateObject(root, current, retrieve) :
+            // value as it is
+            current
+        )
+    )
+  ;
+}
+
+var CircularJSON = {
+  stringify: function stringify(value, replacer, space, doNotResolve) {
+    return CircularJSON.parser.stringify(
+      value,
+      generateReplacer(value, replacer, !doNotResolve),
+      space
+    );
+  },
+  parse: function parse(text, reviver) {
+    return CircularJSON.parser.parse(
+      text,
+      generateReviver(reviver)
+    );
+  },
+  // A parser should be an API 1:1 compatible with JSON
+  // it should expose stringify and parse methods.
+  // The default parser is the native JSON.
+  parser: JSON
+};
+
+module.exports = CircularJSON;
 
 
 /***/ }),

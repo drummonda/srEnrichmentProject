@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchStudent} from '../reducers/studentReducer'
+import UpdateStudentForm from './UpdateStudentForm'
+const JSON = require('circular-json');
 
 class SingleStudent extends Component {
 
@@ -14,20 +16,29 @@ class SingleStudent extends Component {
     this.props.fetchStudent(studentId);
   }
 
+  componentDidUpdate (prevProps) {
+    const studentId = Number(this.props.studentToSet);
+    const prevStudent = prevProps.currentStudent;
+    const {currentStudent} = this.props;
+    if (JSON.stringify(prevStudent) !== JSON.stringify(currentStudent)) {
+      this.props.fetchStudent(studentId);
+    }
+  }
+
   buttonClick () {
     this.props.history.goBack();
   }
 
   render () {
-    const student = this.props.currentStudent;
-    console.log("current student: ", student)
+    const {currentStudent} = this.props;
 
     return (
-      (student ?
+      (currentStudent.name ?
        <div id='student'>
-        <h2>{student.name}</h2>
-        <h3>Age: {student.age}</h3>
-        <h3>Favorite Food: {student.favorite_food}</h3>
+        <h2>{currentStudent.name}</h2>
+        <h3>Age: {currentStudent.age}</h3>
+        <h3>Favorite Food: {currentStudent.favorite_food}</h3>
+        <UpdateStudentForm studentId={currentStudent.id} />
         <button onClick={this.buttonClick} >Back</button>
        </div>
        :
@@ -40,8 +51,8 @@ class SingleStudent extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   studentToSet: ownProps.match.params.studentId,
-  history: ownProps.history,
   currentStudent: state.students.currentStudent,
+  history: ownProps.history,
 });
 
 const mapDispatchToProps = dispatch => ({

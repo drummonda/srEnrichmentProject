@@ -14,6 +14,12 @@ class AllStudents extends Component {
     this.props.fetchStudents();
   }
 
+  componentDidUpdate (prevProps) {
+    if (this.props.students.length !== prevProps.students.length) {
+      this.props.fetchStudents();
+    }
+  }
+
   buttonClick () {
     this.props.history.goBack();
   }

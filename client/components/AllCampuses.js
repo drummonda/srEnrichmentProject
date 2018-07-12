@@ -15,6 +15,12 @@ class AllCampuses extends Component {
     this.props.fetchCampuses();
   }
 
+  componentDidUpdate (prevProps) {
+    if (this.props.campuses.length !== prevProps.campuses.length) {
+      this.props.fetchCampuses();
+    }
+  }
+
   buttonClick () {
     this.props.history.goBack();
   }

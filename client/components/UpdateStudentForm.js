@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import {Link, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {studentNameForm, studentAgeForm, studentFoodForm, makeImageUrl, postStudent} from '../reducers/studentReducer'
+import {studentNameForm, studentAgeForm, studentFoodForm, makeImageUrl, putStudent} from '../reducers/studentReducer'
+const JSON = require('circular-json');
 
-class CreateStudentForm extends Component {
+class UpdateStudentForm extends Component {
 
   constructor (props) {
     super(props);
@@ -11,6 +12,19 @@ class CreateStudentForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.clearProps = this.clearProps.bind(this);
     this.buttonClick = this.buttonClick.bind(this);
+    this.setFormProps = this.setFormProps.bind(this);
+  }
+
+  componentDidMount () {
+    this.setFormProps();
+  }
+
+  componentDidUpdate (prevProps) {
+    const { studentId, currentStudent } = this.props;
+    const prevStudent = prevProps.currentStudent;
+    if (JSON.stringify(prevStudent) !== JSON.stringify(currentStudent)) {
+      this.setFormProps();
+    }
   }
 
   handleChange (event) {
@@ -27,12 +41,13 @@ class CreateStudentForm extends Component {
 
   handleSubmit (event) {
     event.preventDefault();
-    const {name, age, food} = this.props;
+    const { name, age, food, currentStudent } = this.props;
+    const id = currentStudent.id;
     const image_url = makeImageUrl(name);
-    const student = { name, age, food, image_url };
-    this.props.postStudent(student);
+    const studentToSend = { id, name, age, food, image_url };
+    console.log('do I get here 1', studentToSend);
+    this.props.putStudent(studentToSend);
     this.clearProps();
-    this.props.history.push('/students');
   }
 
   clearProps () {
@@ -45,25 +60,32 @@ class CreateStudentForm extends Component {
     this.props.history.goBack();
   }
 
+  setFormProps () {
+    const { currentStudent } = this.props;
+    console.log("This is the currentStudent:", currentStudent);
+    this.props.studentNameForm(currentStudent.name);
+    this.props.studentAgeForm(currentStudent.age);
+    this.props.studentFoodForm(currentStudent.favorite_food);
+  }
+
   render () {
-    const {name, age, food} = this.props;
+    const {name, age, food } = this.props;
 
     return (
-      <div className='create-form' id='create-student-form'>
-        <h2>Cody's fucking student creation form</h2>
-        <form onSubmit={this.handleSubmit}>
+      <div className='create-form' id='create-campus-form'>
+        <h2>Cody's fucking student update form</h2>
+        <form onSubmit={(event) => this.handleSubmit(event)}>
           <label>Student Name</label>
           <input type='text' name='name' value={name} onChange={this.handleChange} />
 
           <label>Student Age</label>
           <input type='text' name='age' value={age}  onChange={this.handleChange} />
 
-          <label>Favorite Food</label>
+          <label>Student Favorite Food</label>
           <input type='text' name='food' value={food} onChange={this.handleChange} />
 
-          <button >Create!</button>
+          <button >Fuckin' Update!</button>
         </form>
-        <button onClick={this.buttonClick} >Back</button>
       </div>
     )
   }
@@ -73,6 +95,8 @@ const mapStateToProps = (state, ownProps) => ({
   name: state.students.studentNameForm,
   age: state.students.studentAgeForm,
   food: state.students.studentFoodForm,
+  currentStudent: state.students.currentStudent,
+  studentId: ownProps.studentId,
   history: ownProps.history
 });
 
@@ -80,9 +104,9 @@ const mapDispatchToProps = dispatch => ({
   studentNameForm: name => dispatch(studentNameForm(name)),
   studentAgeForm: age => dispatch(studentAgeForm(age)),
   studentFoodForm: food => dispatch(studentFoodForm(food)),
-  postStudent: student => dispatch(postStudent(student)),
+  putStudent: student => dispatch(putStudent(student)),
 });
 
-const CreateStudentContainer = connect(mapStateToProps, mapDispatchToProps)(CreateStudentForm);
+const UpdateStudentContainer = connect(mapStateToProps, mapDispatchToProps)(UpdateStudentForm);
 
-export default CreateStudentContainer
+export default UpdateStudentContainer

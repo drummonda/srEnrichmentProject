@@ -40,8 +40,25 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/', async (req, res, next) => {
-  res.send("Going to put the put route here")
+// Update one student at /api/students/:studentId
+router.put('/:studentId', async (req, res, next) => {
+  try {
+    console.log("do I get here 3");
+    const studentUpdates = req.body;
+    console.log("student to update:", studentUpdates)
+    const studentToUpdate = await Student.findById(req.params.studentId);
+    console.log("student to update:", studentToUpdate)
+    studentToUpdate.update({
+      name: studentUpdates.name,
+      age: studentUpdates.age,
+      favorite_food: studentUpdates.food,
+      image_url: studentUpdates.image_url
+    })
+      .then(student => res.json(student))
+      .catch(next)
+  } catch (err) {
+    next(err);
+  }
 })
 
 router.delete('/', async (req, res, next) => {

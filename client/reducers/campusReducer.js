@@ -5,9 +5,10 @@ export const GET_CAMPUSES_FROM_SERVER = 'GET_CAMPUSES_FROM_SERVER';
 export const GET_CAMPUSES = 'GET_CAMPUSES';
 export const SET_CAMPUS = 'SET_CAMPUS';
 export const ADD_CAMPUS = 'ADD_CAMPUS';
-export const NEW_CAMPUS_NAME = 'NEW_CAMPUS_NAME';
-export const NEW_CAMPUS_LOCATION = 'NEW_CAMPUS_LOCATION';
-export const NEW_CAMPUS_HEADMASTER = 'NEW_CAMPUS_HEADMASTER';
+export const UPDATE_CAMPUS = 'UPDATE_CAMPUS';
+export const CAMPUS_NAME_FORM = 'CAMPUS_NAME_FORM';
+export const CAMPUS_LOCATION_FORM = 'CAMPUS_LOCATION_FORM';
+export const CAMPUS_HEADMASTER_FORM = 'CAMPUS_HEADMASTER_FORM';
 
 // ACTION CREATORS
 const getCampuses = campuses => ({
@@ -25,18 +26,23 @@ export const addCampus = campus => ({
   campus
 });
 
-export const newCampusName = name => ({
-  type: NEW_CAMPUS_NAME,
+export const updateCampus = updatedCampus => ({
+  type: UPDATE_CAMPUS,
+  updatedCampus
+})
+
+export const campusNameForm = name => ({
+  type: CAMPUS_NAME_FORM,
   name
 });
 
-export const newCampusHeadmaster = headmaster => ({
-  type: NEW_CAMPUS_HEADMASTER,
+export const campusHeadmasterForm = headmaster => ({
+  type: CAMPUS_HEADMASTER_FORM,
   headmaster
 });
 
-export const newCampusLocation = location => ({
-  type: NEW_CAMPUS_LOCATION,
+export const campusLocationForm = location => ({
+  type: CAMPUS_LOCATION_FORM,
   location
 })
 
@@ -60,10 +66,15 @@ export const fetchCampus = (campusId) => {
 }
 
 export const postCampus = campus => async dispatch => {
-  console.log(campus);
   const response = await axios.post('/api/campuses', campus);
   const gotCampus = response.data;
   dispatch(addCampus(gotCampus));
+};
+
+export const putCampus = campus => async dispatch => {
+  const response = await axios.put(`/api/campuses/${campus.id}`, campus);
+  const gotCampus = response.data;
+  dispatch(updateCampus(gotCampus));
 };
 
 
@@ -84,9 +95,9 @@ export const makeImageUrl = campusName => {
 const initialState = {
   list: [],
   currentCampus: {},
-  newCampusName: '',
-  newCampusLocation: '',
-  newCampusHeadmaster: '',
+  campusNameForm: '',
+  campusLocationForm: '',
+  campusHeadmasterForm: '',
 }
 
 // REDUCER HANDLING
@@ -99,17 +110,20 @@ const campusReducer = (state = initialState, action) => {
      const currentId = Number(action.campusId);
       return Object.assign({}, state, {currentCampus: action.campus});
 
-    case NEW_CAMPUS_NAME:
-      return Object.assign({}, state, {newCampusName: action.name});
+    case CAMPUS_NAME_FORM:
+      return Object.assign({}, state, {campusNameForm: action.name});
 
-    case NEW_CAMPUS_HEADMASTER:
-      return Object.assign({}, state, {newCampusHeadmaster: action.headmaster});
+    case CAMPUS_HEADMASTER_FORM:
+      return Object.assign({}, state, {campusHeadmasterForm: action.headmaster});
 
-    case NEW_CAMPUS_LOCATION:
-      return Object.assign({}, state, {newCampusLocation: action.location});
+    case CAMPUS_LOCATION_FORM:
+      return Object.assign({}, state, {campusLocationForm: action.location});
 
     case ADD_CAMPUS:
       return Object.assign({}, state, {list: [...state.list, action.campus]});
+
+    case UPDATE_CAMPUS:
+      return Object.assign({}, state, {currentCampus: action.updatedCampus});
 
     default:
       return state;

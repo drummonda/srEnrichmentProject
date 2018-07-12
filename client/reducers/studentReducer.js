@@ -5,9 +5,10 @@ export const GET_STUDENTS_FROM_SERVER = 'GET_STUDENTS_FROM_SERVER';
 export const GET_STUDENTS = 'GET_STUDENTS';
 export const GET_STUDENT = 'GET_STUDENT';
 export const ADD_STUDENT = 'ADD_STUDENT';
-export const NEW_STUDENT_NAME = 'NEW_STUDENT_NAME';
-export const NEW_STUDENT_AGE = 'NEW_STUDENT_AGE';
-export const NEW_STUDENT_FOOD = 'NEW_STUDENT_FOOD';
+export const UPDATE_STUDENT = 'UPDATE_STUDENT';
+export const STUDENT_NAME_FORM = 'STUDENT_NAME_FORM';
+export const STUDENT_AGE_FORM = 'STUDENT_AGE_FORM';
+export const STUDENT_FOOD_FORM = 'STUDENT_FOOD_FORM';
 
 // ACTION CREATORS
 export const getStudents = students => ({
@@ -25,18 +26,23 @@ export const addStudent = student => ({
   student
 });
 
-export const newStudentName = name => ({
-  type: NEW_STUDENT_NAME,
+export const updateStudent = updatedStudent => ({
+  type: UPDATE_STUDENT,
+  updatedStudent
+})
+
+export const studentNameForm = name => ({
+  type: STUDENT_NAME_FORM,
   name
 })
 
-export const newStudentAge = age => ({
-  type: NEW_STUDENT_AGE,
+export const studentAgeForm = age => ({
+  type: STUDENT_AGE_FORM,
   age
 })
 
-export const newStudentFood = food => ({
-  type: NEW_STUDENT_FOOD,
+export const studentFoodForm = food => ({
+  type: STUDENT_FOOD_FORM,
   food
 })
 
@@ -62,9 +68,18 @@ export const fetchStudent = studentId => {
 
 export const postStudent = student => async dispatch => {
   console.log(student);
-  const response = await axios.post('/api/students', student);
+  const response = await axios.post('/api/students', {student: student});
   const gotStudent = response.data;
   dispatch(addStudent(gotStudent));
+};
+
+export const putStudent = studentToUpdate => async dispatch => {
+  console.log('do I get here 2');
+  console.log('student being sent:', studentToUpdate);
+  const response = await axios.put(`/api/students/${studentToUpdate.id}`, studentToUpdate);
+  const gotStudent = response.data;
+  console.log(gotStudent);
+  dispatch(updateStudent(gotStudent));
 };
 
 // HELPER FUNCTIONS
@@ -77,9 +92,9 @@ export const makeImageUrl = studentName => {
 const initialState = {
   list: [],
   currentStudent: {},
-  newStudentName: '',
-  newStudentAge: '',
-  newStudentFood: '',
+  studentNameForm: '',
+  studentAgeForm: '',
+  studentFoodForm: '',
 }
 
 // REDUCER HANDLING
@@ -91,17 +106,20 @@ const studentReducer = (state = initialState, action) => {
     case GET_STUDENT:
       return Object.assign({}, state, {currentStudent: action.student});
 
-    case NEW_STUDENT_NAME:
-      return Object.assign({}, state, {newStudentName: action.name});
+    case STUDENT_NAME_FORM:
+      return Object.assign({}, state, {studentNameForm: action.name});
 
-    case NEW_STUDENT_AGE:
-      return Object.assign({}, state, {newStudentAge: action.age});
+    case STUDENT_AGE_FORM:
+      return Object.assign({}, state, {studentAgeForm: action.age});
 
-    case NEW_STUDENT_FOOD:
-      return Object.assign({}, state, {newStudentFood: action.food});
+    case STUDENT_FOOD_FORM:
+      return Object.assign({}, state, {studentFoodForm: action.food});
 
     case ADD_STUDENT:
       return Object.assign({}, state, {list: [...state.list, action.student]});
+
+    case UPDATE_STUDENT:
+      return Object.assign({}, state, {currentStudent: action.updatedStudent});
 
     default:
       return state;

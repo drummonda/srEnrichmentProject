@@ -41,8 +41,22 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/', async (req, res, next) => {
-  res.send("Going to put the put route here")
+// Update one campus at /api/campuses/:campusId
+router.put('/:campusId', async (req, res, next) => {
+  try {
+    const campusUpdates = req.body;
+    const campusToUpdate = await Campus.findById(req.params.campusId)
+    const updatedCampus = await campusToUpdate.update({
+          name: campusUpdates.name,
+          location: campusUpdates.location,
+          headmaster: campusUpdates.headmaster,
+          headmaster_email: campusUpdates.headmaster_email,
+          image_url: campusUpdates.image_url
+      });
+    res.json(updatedCampus);
+  } catch (err) {
+    next(err);
+  }
 })
 
 router.delete('/', async (req, res, next) => {
