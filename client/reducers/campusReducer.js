@@ -114,7 +114,7 @@ export const removeStudent = studentId => async dispatch => {
 
 // HELPER FUNCTIONS
 export const makeEmail = (campusName, headmasterName) => {
-  const firstNameLowerCase = headmasterName.split(' ')[0].toLowerCase();
+  const firstNameLowerCase = headmasterName.split(' ').join('').toLowerCase();
   const campusNameLowercase = campusName.split(' ').join('').toLowerCase();
   return `${firstNameLowerCase}@${campusNameLowercase}.wiz`;
 }

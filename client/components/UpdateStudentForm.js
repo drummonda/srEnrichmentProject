@@ -37,10 +37,9 @@ class UpdateStudentForm extends Component {
 
   handleSubmit (event) {
     event.preventDefault();
-    const { name, age, food, currentStudent, campusId } = this.props;
-    const id = currentStudent.id;
+    const { name, age, food, currentStudent, campusId} = this.props;
+    const {id} = currentStudent;
     const image_url = makeImageUrl(name);
-    console.log(campusId);
     const studentToSend = { id, name, age, food, image_url, campusId };
     console.log('do I get here 1', studentToSend);
     this.props.putStudent(studentToSend);
@@ -77,7 +76,7 @@ class UpdateStudentForm extends Component {
     return (
       (currentStudent.name ?
       <div className='create-form' id='create-campus-form'>
-        <h2>Cody's fucking student update form</h2>
+        <h2>Fuckin' update a student form</h2>
         <form onSubmit={(event) => this.handleSubmit(event)}>
           <label>Student Name</label>
           <input type='text' name='name' value={name} onChange={this.handleChange} />
@@ -102,9 +101,9 @@ const mapStateToProps = (state, ownProps) => ({
   name: state.students.studentNameForm,
   age: state.students.studentAgeForm,
   food: state.students.studentFoodForm,
-  campusId: state.students.campusId,
   currentStudent: state.students.currentStudent,
   campuses: state.campuses.list,
+  campusId: state.students.campusId,
   studentId: Number(ownProps.match.params.studentId),
   history: ownProps.history
 });

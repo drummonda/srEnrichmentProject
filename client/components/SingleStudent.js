@@ -45,19 +45,25 @@ class SingleStudent extends Component {
 
     return (
       (currentStudent.name ?
-       <div id='student'>
-        <h2>{currentStudent.name}</h2>
-        <h3>Age: {currentStudent.age}</h3>
-        <h3>Favorite Food: {currentStudent.favorite_food}</h3>
-        <h3>Attends: { currentCampus ? currentCampus.name : "No fucking campus!" }
-        </h3>
-        <button onClick={this.handleDelete} >Fucking Delete!!!</button>
-        <button id='edit-button'>
-          <Link to={`/students/${currentStudent.id}/edit`} >
-            Fuckin' Edit!
-          </Link>
-        </button>
-        <button onClick={this.buttonClick} >Back</button>
+       <div className='student-page'>
+        <div className='student-info'>
+          <h2>{currentStudent.name}</h2>
+          <img src='cody.jpg'/>
+          <br/><br/><br/>
+          <h3>Age: {currentStudent.age}</h3>
+          <h3>Favorite Food: {currentStudent.favorite_food}</h3>
+          <h3>Attends: { currentCampus ? currentCampus.name : "No fucking campus!" }
+          </h3>
+        </div>
+        <div className='button-div'>
+          <button className='button' onClick={this.handleDelete} >Fucking Delete!!!</button>
+          <button className='button'>
+            <Link to={`/students/${currentStudent.id}/edit`} >
+              Fuckin' Edit!
+            </Link>
+          </button>
+          <button className='button' onClick={this.buttonClick} >Back</button>
+        </div>
        </div>
        :
        <h2>Loading</h2>

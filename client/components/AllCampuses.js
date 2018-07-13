@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {fetchCampuses} from '../reducers/campusReducer'
-import AllStudents from './AllStudents'
+import CampusItem from './CampusItem'
 
 class AllCampuses extends Component {
 
@@ -31,19 +31,25 @@ class AllCampuses extends Component {
 
     return (
       (campuses.length &&
-       <div id='all-campuses'>
+       <div className='campus-list'>
+        <div className='header'>
          <h1>All the fuckin' campuses</h1>
-         <ul>
-          {campuses.map(campus => (
-            <li key={campus.id}><Link to={`/campuses/${campus.id}`} >{campus.name}</Link></li>
-          ))}
-         </ul>
-         <button onClick={this.buttonClick} >Back</button>
-         <button id='create-button'>
-          <Link to='/new-campus-form' >
-            Add a new campus!
-          </Link>
-        </button>
+          <div className='button-div'>
+             <button className='button' onClick={this.buttonClick} >Back</button>
+             <button className='button' id='create-button'>
+              <Link to='/new-campus-form' >
+                Add a new campus!
+              </Link>
+            </button>
+          </div>
+         </div>
+         <div className='actual-campus-list'>
+          <ul>
+            {campuses.map(campus => (
+              <CampusItem key={campus.id} campus={campus} />
+            ))}
+          </ul>
+         </div>
        </div>
       )
     )

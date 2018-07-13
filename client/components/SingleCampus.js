@@ -61,26 +61,39 @@ class SingleCampus extends Component {
 
     return (
       (campus.name ?
-       <div id='campus'>
-        <h2>{campus.name}</h2>
-        <h3>Location: {campus.location}</h3>
-        <h3>Headmaster: {campus.headmaster}</h3>
-        <button onClick={this.handleDelete} >Fucking Delete!!!</button>
-        <button id='edit-button'>
-          <Link to={`/campuses/${campus.id}/edit`} >
-            Fuckin' Edit!
-          </Link>
-        </button>
-        <button onClick={this.buttonClick} >Back</button>
-        <StudentList
-          students={campus.students}
-          campusId={campus.id}
-          handleRemove={this.handleRemove}/>
-        <StudentSelector
-          currentStudents={campus.students}
-          students={students}
-          handleSelect={this.handleSelect}
-          handleAddStudent={this.handleAddStudent} />
+       <div className='campus-page'>
+        <div className='campus-info'>
+          <div className='campus-info-container'>
+            <h2>{campus.name}</h2>
+            <img src='upenn.jpg'/>
+            <h3>Location: {campus.location}</h3>
+            <h3>Headmaster: {campus.headmaster}</h3>
+          </div>
+        </div>
+
+        <div className='button-div'>
+          <button onClick={this.handleDelete} >Fucking Delete!!!</button>
+          <button>
+            <Link to={`/campuses/${campus.id}/edit`} >
+              Fuckin' Edit!
+            </Link>
+          </button>
+          <button onClick={this.buttonClick} >Back</button>
+        </div>
+
+        <div className='campus-students'>
+          <h2>All the fucking students</h2>
+          <StudentList
+            students={campus.students}
+            campusId={campus.id}
+            handleRemove={this.handleRemove}/>
+          <StudentSelector
+            currentStudents={campus.students}
+            students={students}
+            handleSelect={this.handleSelect}
+            handleAddStudent={this.handleAddStudent} />
+        </div>
+
        </div>
        :
        <h2>Loading</h2>

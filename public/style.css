@@ -7,7 +7,7 @@ body {
   height: 100vh;
   width: 100vw;
   margin: 0;
-  background: #4286f4;
+  background: #e6f2ff;
   color: white;
   letter-spacing: 0.05em;
 }
@@ -24,13 +24,6 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0 30%;
-}
-
-#app > #result {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  align-items: center;
 }
 
 form > * {
@@ -61,53 +54,12 @@ input[type=radio] {
   margin-right: 1em;
 }
 
-nav {
-  background-color: rgba(37, 37, 37, 0.8);
-  display: flex;
-  position: fixed;
-  z-index: 2;
-  justify-content: space-around;
-  border-radius: 0 0 30px 30px;
-  width: 90%;
-  left: 5%;
-  height: 10%;
-
-}
-
 #loading {
   position: fixed;
   top: 50%;
   left: 50%;
 }
 
-#navbar {
-  position: fixed;
-  top: 0%;
-  left: 5%;
-}
-
-#nav-flex {
-  display: flex;
-  align-items: center;
-  margin: 0 6%;
-}
-
-.nav-link {
-  padding-left: 10%;
-  font-size: 3em;
-  margin: 0 2%;
-}
-
-.choice {
-  display: flex;
-  justify-content: space-between;
-}
-
-#question {
-  display: flex;
-  justify-content: center;
-  font-size: 1.5em;
-}
 
 #question-label {
   margin: 0 5% 0 0;
@@ -129,19 +81,339 @@ nav {
   justify-content: center;
 }
 
+/* Navbar related items */
+
+nav {
+  background-color: rgba(37, 37, 37, 0.8);
+  display: flex;
+  position: fixed;
+  z-index: 2;
+  justify-content: space-around;
+  border-radius: 0 0 30px 30px;
+  width: 90%;
+  left: 5%;
+  height: 10%;
+
+}
+
+#navbar {
+  position: fixed;
+  top: 0%;
+  left: 5%;
+  justify-content: space-around;
+}
+
+#nav-flex {
+  display: flex;
+  align-items: center;
+  margin: 0 6%;
+}
+
+#smaller-nav-container {
+  display: flex;
+  align-items: right;
+
+}
+
+#main-nav-link {
+  color: white;
+  font-size: 3em;
+}
+
+#secondary-nav-link {
+  color: white;
+  font-size: 2.5em;
+  margin: 0 4% 0 4%;
+}
+
+
+
 a:visited {
-  color:white;
   padding-left: 10%;
   font-size: 3em;
   margin: 0 2%;
+  text-decoration: none;
+  color: rgba(37, 37, 37, 0.8);
 }
 
 a {
-  color: white;
+  text-decoration: none;
+  color: rgba(37, 37, 37, 0.8);
+  display: flex;
+  flex-flow: wrap column;
 }
 
-#container {
-  align-self: center;
+.header {
+  display: flex;
+  justify-content: flex-start;
+  height: 15%;
   width: 80%;
+}
+
+/* Main component related */
+
+#container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+/* Campus list */
+.campus-list {
+  display: flex;
+  flex-flow: column wrap;
+  align-self: center;
+  justify-content: center;
+  width: 100%;
+  height: 90%;
+  margin: 10% 5% 0% 5%;
+}
+
+.campus-list > h2 {
+  color: rgba(37, 37, 37, 0.8);
+  margin: 2% 0 0 0;
+}
+
+.actual-campus-list {
+  height: 70%;
+  width: 90%;
+  margin: 1% 0% 2% 2%;
+}
+
+.actual-campus-list > ul {
+  width: 800px;
+  display: flex;
+  flex-flow: wrap column;
+  color: rgba(37, 37, 37, 0.8);
+  height: 600px;
+}
+
+li.campus-item {
+  display: flex;
+  flex-flow: wrap column;
+  margin: 1% 1% 1% 1%;
+}
+
+#campus-list > a {
+  color: rgba(37, 37, 37, 0.8);
+}
+
+#campus-list > h1 {
+  color: rgba(37, 37, 37, 0.8);
+  margin: 2% 0 0 0;
+}
+
+/* Single campus */
+
+div.campus-page {
+  color: rgba(37, 37, 37, 0.8);
+  display: flex;
+  align-self: center;
+  flex-wrap: row wrap;
+  flex-direction: column;
+  width: 100%;
+  height: 90%;
+  margin: 10% 0% 0% 5%;
+}
+
+div.campus-info {
+  display: flex;
+  flex-flow: wrap column;
+  justify-content: center;
+  height: 70%;
+  width: 80%;
+  margin: 5% 0 5% 0;
+}
+
+div.campus-info-container {
+  margin: 6% 0% 4% 0%;
+}
+
+div.campus-students {
+  display: flex;
+  flex-flow: wrap;
+  background-color: #757a82;
+  width: 90%;
+  height: 90%;
+  margin: 3% 0% 3% 0%;
+}
+
+div.campus-select-container {
+  margin: 0% 3% 10% 3%;
+  display: inline-flex;
+}
+
+div.student-list {
+  display: flex;
+  margin: 0 auto;
+}
+
+div.student-list > ul {
+  width: 600px;
+  display: flex;
+  flex-flow: wrap column;
+  color: rgba(37, 37, 37, 0.8);
+  height: 1000px;
+}
+
+li.campus-student-list {
+  justify-content: center;
+  display: flex;
+  flex-flow: wrap row;
+  margin: 1% 1% 1% 1%;
+}
+
+div.campus-info-container > h2 {
+  margin: 0 auto;
+}
+
+/* Single student */
+
+div.student-page {
+  color: rgba(37, 37, 37, 0.8);
+  display: flex;
+  align-self: center;
+  flex-wrap: row wrap;
+  flex-direction: column;
+  width: 100%;
   height: 80%;
+  margin: 10% 10% 10% 10%;
+}
+
+div.student-info {
+  display: flex;
+  flex-flow: column wrap;
+  height: 60%;
+  width: 100%;
+  margin: 1% 0 2% 0;
+}
+
+/* Student list */
+
+.student-list {
+  display: flex;
+  flex-flow: column wrap;
+  align-self: center;
+  float: left;
+  justify-content: center;
+  width: 90%;
+  height: 80%;
+  margin: 10% 5% 0% 5%;
+}
+
+.header > h2 {
+  color: rgba(37, 37, 37, 0.8);
+  margin: 2% 2% 2% 2%;
+}
+
+.actual-student-list {
+  height: 70%;
+  width: 90%;
+  margin: 1% 0% 2% 2%;
+}
+
+.actual-student-list > ul {
+  width: 600px;
+  display: flex;
+  flex-flow: wrap column;
+  color: rgba(37, 37, 37, 0.8);
+  height: 1000px;
+}
+
+li.student-item {
+  display: flex ;
+  flex-flow: wrap column;
+  margin: 1% 1% 1% 1%;
+}
+
+
+#student-list > a {
+  color: rgba(37, 37, 37, 0.8);
+}
+
+/* Forms */
+.create-form {
+  color: rgba(37, 37, 37, 0.8);
+  align-self: center;
+  text-align: center;
+  width: 100%;
+  height: 80%;
+}
+
+/* Home component related */
+
+#home-container {
+  align-self: center;
+  text-align: center;
+  width: 100%;
+  height: 80%;
+}
+
+h1 {
+  color: rgba(37, 37, 37, 0.8);
+}
+
+h2 {
+  margin: 2% 2% 2% 2%;
+}
+
+/* Select styling */
+.rounded {
+   -webkit-border-radius: 20px;
+   -moz-border-radius: 20px;
+   border-radius: 20px;
+}
+
+.styled-select {
+   background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+   height: 29px;
+   overflow: hidden;
+   width: 240px;
+   margin: 0 2% 0 2%;
+}
+
+.green  { background-color: #779126; }
+
+#home-banner {
+  display: flex;
+  align-self: center;
+  width: 100%;
+  height: 80%;
+  background-image: url('art.jpg');
+  background-size: cover;
+}
+
+/* Button styling */
+
+button {
+  height: 80%;
+  width: 40%;
+  margin: 1% 2% 1% 2%;
+  color: rgba(37, 37, 37, 0.8);
+}
+
+button#back {
+
+}
+
+.button-div {
+  display: flex;
+  width: 40%;
+  margin: 2% 0% 2% 0%;
+}
+
+/* more CSS for that specific screen size*/
+@media (max-width: 700px) {
+ .nav-link {
+  font-size: 2em;
+ }
+
+}
+
+
+@media (max-width: 450px) {
+ .nav-link {
+  font-size: 1em;
+ }
+
 }

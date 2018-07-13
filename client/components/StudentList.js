@@ -8,12 +8,11 @@ const StudentList = ({students, campusId, handleRemove}) => {
 
   return (
     <div className='student-list'>
-      <h2>Cody's fucking students</h2>
       <ul>
         {students ?
           (students.map(student => (
-            <li key={student.id}>
-              <Link to={`/students/${student.id}`} >
+            <li className='campus-student-list'key={student.id}>
+              <Link className='student-name' to={`/students/${student.id}`} >
                 {student.name}
               </Link>
               <button onClick={() => handleRemove(student.id)} >Fucking Delete!!!</button>

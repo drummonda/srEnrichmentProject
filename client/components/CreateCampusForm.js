@@ -51,7 +51,12 @@ class CreateCampusForm extends Component {
 
     return (
       <div className='create-form' id='create-campus-form'>
-        <h2>Cody's fucking campus creation form</h2>
+        <div className='header'>
+          <h2>Cody's fucking campus creation form</h2>
+          <div className='button-div'>
+            <button id='back' onClick={this.buttonClick} >Back</button>
+          </div>
+        </div>
         <form onSubmit={this.handleSubmit}>
           <label>Campus Name</label>
           <input type='text' name='name' value={name} onChange={this.handleChange} />
@@ -64,7 +69,6 @@ class CreateCampusForm extends Component {
 
           <button >Create!</button>
         </form>
-        <button onClick={this.buttonClick} >Back</button>
       </div>
     )
   }

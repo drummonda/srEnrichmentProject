@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {fetchStudents} from '../reducers/studentReducer'
+import StudentItem from './StudentItem'
 
 class AllStudents extends Component {
 
@@ -29,21 +30,27 @@ class AllStudents extends Component {
     console.log("These are all the students:", students);
 
     return (
-      <div id='student-list'>
-        <h2>Cody's fucking students</h2>
-        <ul>
-          {this.props.students.length &&
-            (students.map(student => (
-              <li key={student.id}><Link to={`/students/${student.id}`} >{student.name}</Link></li>
-            )
-          )) }
-        </ul>
-        <button onClick={this.buttonClick} >Back</button>
-        <button id='create-button'>
-          <Link to='/new-student-form' >
-            Add a new student!
-          </Link>
-        </button>
+      <div className='student-list'>
+        <div className='header'>
+          <h2>Cody's students</h2>
+          <div className='button-div'>
+            <button className='button' onClick={this.buttonClick} >Back</button>
+            <button className='button'>
+              <Link to='/new-student-form' >
+                Add a new student!
+              </Link>
+            </button>
+          </div>
+        </div>
+        <div className='actual-student-list'>
+          <ul>
+            {this.props.students.length &&
+              (students.map(student => (
+                <StudentItem key={student.id} student={student}/>
+              )
+            )) }
+          </ul>
+        </div>
       </div>
     )
   }

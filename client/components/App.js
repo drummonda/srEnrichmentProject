@@ -8,13 +8,15 @@ import CreateStudentForm from './CreateStudentForm';
 import CreateCampusForm from './CreateCampusForm';
 import UpdateCampusForm from './UpdateCampusForm';
 import UpdateStudentForm from './UpdateStudentForm';
+import Home from './Home';
+
 
 export default class App extends Component {
 
   render () {
     return (
       <div id="container">
-        <h1>Cody's campus</h1>
+        <Route exact path='/' component={Home} />
         <Route exact path='/students' component={AllStudents}/>
         <Route exact path='/campuses' component={AllCampuses}/>
         <Route path='/new-student-form' component={CreateStudentForm} />

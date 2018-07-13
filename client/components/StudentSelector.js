@@ -6,14 +6,14 @@ const StudentSelector = ({currentStudents, students, handleSelect, handleAddStud
     students = students.filter(student => !ids.includes(student.id));
   }
   return (
-    <div id='campus-select-container'>
+    <div className='campus-select-container'>
       <label name='select'>
         Add a student!
       </label>
-      <select id='campus-selector' onChange={(event) => handleSelect(event)}>
+      <select  className="styled-select green rounded" onChange={(event) => handleSelect(event)}>
         {students.map(student => (
           <option value={student.id} key={student.name}>
-            {student.name}
+            <em>{student.name}</em>
           </option>
         ))}
       </select>

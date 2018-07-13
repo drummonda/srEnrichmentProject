@@ -9,7 +9,7 @@ const CampusSelector = ({currentCampus, campuses, handleSelect}) => {
       <label name='select'>
         Pick a campus!
       </label>
-      <select id='campus-selector' onChange={(event) => handleSelect(event)}>
+      <select  className="styled-select green rounded" onChange={(event) => handleSelect(event)}>
         {currentCampus ?
           <option value={currentCampus.id} key={currentCampus.name}>
             {currentCampus.name}

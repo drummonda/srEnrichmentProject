@@ -100,7 +100,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _reducers_campusReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../reducers/campusReducer */ "./client/reducers/campusReducer.js");
-/* harmony import */ var _AllStudents__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AllStudents */ "./client/components/AllStudents.js");
+/* harmony import */ var _CampusItem__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CampusItem */ "./client/components/CampusItem.js");
 
 
 
@@ -134,37 +134,41 @@ class AllCampuses extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
     return campuses.length && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       'div',
-      { id: 'all-campuses' },
+      { className: 'campus-list' },
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'h1',
-        null,
-        'All the fuckin\' campuses'
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'ul',
-        null,
-        campuses.map(campus => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-          'li',
-          { key: campus.id },
-          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-            react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
-            { to: `/campuses/${campus.id}` },
-            campus.name
-          )
-        ))
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'button',
-        { onClick: this.buttonClick },
-        'Back'
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'button',
-        { id: 'create-button' },
+        'div',
+        { className: 'header' },
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-          react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
-          { to: '/new-campus-form' },
-          'Add a new campus!'
+          'h1',
+          null,
+          'All the fuckin\' campuses'
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'div',
+          { className: 'button-div' },
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            'button',
+            { className: 'button', onClick: this.buttonClick },
+            'Back'
+          ),
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            'button',
+            { className: 'button', id: 'create-button' },
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+              react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
+              { to: '/new-campus-form' },
+              'Add a new campus!'
+            )
+          )
+        )
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        'div',
+        { className: 'actual-campus-list' },
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'ul',
+          null,
+          campuses.map(campus => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CampusItem__WEBPACK_IMPORTED_MODULE_4__["default"], { key: campus.id, campus: campus }))
         )
       )
     );
@@ -200,6 +204,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../reducers/studentReducer */ "./client/reducers/studentReducer.js");
+/* harmony import */ var _StudentItem__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./StudentItem */ "./client/components/StudentItem.js");
+
 
 
 
@@ -232,37 +238,41 @@ class AllStudents extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       'div',
-      { id: 'student-list' },
+      { className: 'student-list' },
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'h2',
-        null,
-        'Cody\'s fucking students'
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'ul',
-        null,
-        this.props.students.length && students.map(student => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-          'li',
-          { key: student.id },
-          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-            react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
-            { to: `/students/${student.id}` },
-            student.name
-          )
-        ))
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'button',
-        { onClick: this.buttonClick },
-        'Back'
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'button',
-        { id: 'create-button' },
+        'div',
+        { className: 'header' },
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-          react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
-          { to: '/new-student-form' },
-          'Add a new student!'
+          'h2',
+          null,
+          'Cody\'s students'
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'div',
+          { className: 'button-div' },
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            'button',
+            { className: 'button', onClick: this.buttonClick },
+            'Back'
+          ),
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            'button',
+            { className: 'button' },
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+              react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
+              { to: '/new-student-form' },
+              'Add a new student!'
+            )
+          )
+        )
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        'div',
+        { className: 'actual-student-list' },
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'ul',
+          null,
+          this.props.students.length && students.map(student => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StudentItem__WEBPACK_IMPORTED_MODULE_4__["default"], { key: student.id, student: student }))
         )
       )
     );
@@ -305,6 +315,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CreateCampusForm__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./CreateCampusForm */ "./client/components/CreateCampusForm.js");
 /* harmony import */ var _UpdateCampusForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./UpdateCampusForm */ "./client/components/UpdateCampusForm.js");
 /* harmony import */ var _UpdateStudentForm__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./UpdateStudentForm */ "./client/components/UpdateStudentForm.js");
+/* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Home */ "./client/components/Home.js");
+
 
 
 
@@ -322,11 +334,7 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       'div',
       { id: 'container' },
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'h1',
-        null,
-        'Cody\'s campus'
-      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], { exact: true, path: '/', component: _Home__WEBPACK_IMPORTED_MODULE_10__["default"] }),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], { exact: true, path: '/students', component: _AllStudents__WEBPACK_IMPORTED_MODULE_2__["default"] }),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], { exact: true, path: '/campuses', component: _AllCampuses__WEBPACK_IMPORTED_MODULE_3__["default"] }),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], { path: '/new-student-form', component: _CreateStudentForm__WEBPACK_IMPORTED_MODULE_6__["default"] }),
@@ -338,6 +346,38 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     );
   }
 }
+
+/***/ }),
+
+/***/ "./client/components/CampusItem.js":
+/*!*****************************************!*\
+  !*** ./client/components/CampusItem.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+
+
+const CampusItem = ({ campus }) => {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+    'li',
+    { className: 'campus-item' },
+    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
+      { to: `/campuses/${campus.id}` },
+      campus.name
+    ),
+    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('img', { src: 'upenn.jpg' })
+  );
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (CampusItem);
 
 /***/ }),
 
@@ -368,7 +408,7 @@ const CampusSelector = ({ currentCampus, campuses, handleSelect }) => {
     ),
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       'select',
-      { id: 'campus-selector', onChange: event => handleSelect(event) },
+      { className: 'styled-select green rounded', onChange: event => handleSelect(event) },
       currentCampus ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         'option',
         { value: currentCampus.id, key: currentCampus.name },
@@ -456,9 +496,22 @@ class CreateCampusForm extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       'div',
       { className: 'create-form', id: 'create-campus-form' },
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'h2',
-        null,
-        'Cody\'s fucking campus creation form'
+        'div',
+        { className: 'header' },
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'h2',
+          null,
+          'Cody\'s fucking campus creation form'
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'div',
+          { className: 'button-div' },
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            'button',
+            { id: 'back', onClick: this.buttonClick },
+            'Back'
+          )
+        )
       ),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         'form',
@@ -486,11 +539,6 @@ class CreateCampusForm extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           null,
           'Create!'
         )
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'button',
-        { onClick: this.buttonClick },
-        'Back'
       )
     );
   }
@@ -586,7 +634,7 @@ class CreateStudentForm extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] 
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         'h2',
         null,
-        'Cody\'s fucking student creation form'
+        'Student fuckin\' creation form'
       ),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         'form',
@@ -612,7 +660,7 @@ class CreateStudentForm extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] 
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
           'button',
           null,
-          'Create!'
+          'Fuckin\' create!'
         )
       ),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
@@ -644,6 +692,36 @@ const CreateStudentContainer = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["
 
 /***/ }),
 
+/***/ "./client/components/Home.js":
+/*!***********************************!*\
+  !*** ./client/components/Home.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+const Home = () => {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+    'div',
+    { id: 'home-container' },
+    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      'h1',
+      { id: 'home-header' },
+      'Fuck yeah welcome to Cody\'s campus site!'
+    ),
+    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('div', { id: 'home-banner' })
+  );
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Home);
+
+/***/ }),
+
 /***/ "./client/components/Navbar.js":
 /*!*************************************!*\
   !*** ./client/components/Navbar.js ***!
@@ -668,13 +746,28 @@ class Navbar extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       { id: 'navbar' },
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"],
-        { className: 'nav-link', to: '/students' },
-        'Students'
+        { className: 'nav-link', id: 'main-nav-link', to: '/' },
+        'Home'
       ),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"],
-        { className: 'nav-link', to: '/campuses' },
-        'Campuses'
+        'div',
+        { id: 'smaller-nav-container' },
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"],
+          {
+            className: 'nav-link',
+            id: 'secondary-nav-link',
+            to: '/students' },
+          'Students'
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"],
+          {
+            className: 'nav-link',
+            id: 'secondary-nav-link',
+            to: '/campuses' },
+          'Campuses'
+        )
       )
     );
   }
@@ -763,52 +856,74 @@ class SingleCampus extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
     return campus.name ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       'div',
-      { id: 'campus' },
+      { className: 'campus-page' },
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'h2',
-        null,
-        campus.name
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'h3',
-        null,
-        'Location: ',
-        campus.location
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'h3',
-        null,
-        'Headmaster: ',
-        campus.headmaster
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'button',
-        { onClick: this.handleDelete },
-        'Fucking Delete!!!'
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'button',
-        { id: 'edit-button' },
+        'div',
+        { className: 'campus-info' },
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-          react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"],
-          { to: `/campuses/${campus.id}/edit` },
-          'Fuckin\' Edit!'
+          'div',
+          { className: 'campus-info-container' },
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            'h2',
+            null,
+            campus.name
+          ),
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('img', { src: 'upenn.jpg' }),
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            'h3',
+            null,
+            'Location: ',
+            campus.location
+          ),
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            'h3',
+            null,
+            'Headmaster: ',
+            campus.headmaster
+          )
         )
       ),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'button',
-        { onClick: this.buttonClick },
-        'Back'
+        'div',
+        { className: 'button-div' },
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'button',
+          { onClick: this.handleDelete },
+          'Fucking Delete!!!'
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'button',
+          null,
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"],
+            { to: `/campuses/${campus.id}/edit` },
+            'Fuckin\' Edit!'
+          )
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'button',
+          { onClick: this.buttonClick },
+          'Back'
+        )
       ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StudentList__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        students: campus.students,
-        campusId: campus.id,
-        handleRemove: this.handleRemove }),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StudentSelector__WEBPACK_IMPORTED_MODULE_7__["default"], {
-        currentStudents: campus.students,
-        students: students,
-        handleSelect: this.handleSelect,
-        handleAddStudent: this.handleAddStudent })
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        'div',
+        { className: 'campus-students' },
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'h2',
+          null,
+          'All the fucking students'
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StudentList__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          students: campus.students,
+          campusId: campus.id,
+          handleRemove: this.handleRemove }),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StudentSelector__WEBPACK_IMPORTED_MODULE_7__["default"], {
+          currentStudents: campus.students,
+          students: students,
+          handleSelect: this.handleSelect,
+          handleAddStudent: this.handleAddStudent })
+      )
     ) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       'h2',
       null,
@@ -904,48 +1019,60 @@ class SingleStudent extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
     return currentStudent.name ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       'div',
-      { id: 'student' },
+      { className: 'student-page' },
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'h2',
-        null,
-        currentStudent.name
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'h3',
-        null,
-        'Age: ',
-        currentStudent.age
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'h3',
-        null,
-        'Favorite Food: ',
-        currentStudent.favorite_food
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'h3',
-        null,
-        'Attends: ',
-        currentCampus ? currentCampus.name : "No fucking campus!"
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'button',
-        { onClick: this.handleDelete },
-        'Fucking Delete!!!'
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'button',
-        { id: 'edit-button' },
+        'div',
+        { className: 'student-info' },
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-          react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"],
-          { to: `/students/${currentStudent.id}/edit` },
-          'Fuckin\' Edit!'
+          'h2',
+          null,
+          currentStudent.name
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('img', { src: 'cody.jpg' }),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('br', null),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('br', null),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('br', null),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'h3',
+          null,
+          'Age: ',
+          currentStudent.age
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'h3',
+          null,
+          'Favorite Food: ',
+          currentStudent.favorite_food
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'h3',
+          null,
+          'Attends: ',
+          currentCampus ? currentCampus.name : "No fucking campus!"
         )
       ),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        'button',
-        { onClick: this.buttonClick },
-        'Back'
+        'div',
+        { className: 'button-div' },
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'button',
+          { className: 'button', onClick: this.handleDelete },
+          'Fucking Delete!!!'
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'button',
+          { className: 'button' },
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"],
+            { to: `/students/${currentStudent.id}/edit` },
+            'Fuckin\' Edit!'
+          )
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'button',
+          { className: 'button', onClick: this.buttonClick },
+          'Back'
+        )
       )
     ) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       'h2',
@@ -975,6 +1102,38 @@ const SingleStudentContainer = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["
 
 /***/ }),
 
+/***/ "./client/components/StudentItem.js":
+/*!******************************************!*\
+  !*** ./client/components/StudentItem.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+
+
+const StudentItem = ({ student }) => {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+    'li',
+    { className: 'student-item' },
+    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
+      { to: `/students/${student.id}` },
+      student.name,
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('img', { src: 'cody.jpg' })
+    )
+  );
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (StudentItem);
+
+/***/ }),
+
 /***/ "./client/components/StudentList.js":
 /*!******************************************!*\
   !*** ./client/components/StudentList.js ***!
@@ -1000,19 +1159,14 @@ const StudentList = ({ students, campusId, handleRemove }) => {
     'div',
     { className: 'student-list' },
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-      'h2',
-      null,
-      'Cody\'s fucking students'
-    ),
-    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       'ul',
       null,
       students ? students.map(student => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         'li',
-        { key: student.id },
+        { className: 'campus-student-list', key: student.id },
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
           react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
-          { to: `/students/${student.id}` },
+          { className: 'student-name', to: `/students/${student.id}` },
           student.name
         ),
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
@@ -1053,7 +1207,7 @@ const StudentSelector = ({ currentStudents, students, handleSelect, handleAddStu
   }
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
     'div',
-    { id: 'campus-select-container' },
+    { className: 'campus-select-container' },
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       'label',
       { name: 'select' },
@@ -1061,11 +1215,15 @@ const StudentSelector = ({ currentStudents, students, handleSelect, handleAddStu
     ),
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       'select',
-      { id: 'campus-selector', onChange: event => handleSelect(event) },
+      { className: 'styled-select green rounded', onChange: event => handleSelect(event) },
       students.map(student => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         'option',
         { value: student.id, key: student.name },
-        student.name
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          'em',
+          null,
+          student.name
+        )
       ))
     ),
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
@@ -1276,9 +1434,8 @@ class UpdateStudentForm extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] 
   handleSubmit(event) {
     event.preventDefault();
     const { name, age, food, currentStudent, campusId } = this.props;
-    const id = currentStudent.id;
+    const { id } = currentStudent;
     const image_url = Object(_reducers_studentReducer__WEBPACK_IMPORTED_MODULE_3__["makeImageUrl"])(name);
-    console.log(campusId);
     const studentToSend = { id, name, age, food, image_url, campusId };
     console.log('do I get here 1', studentToSend);
     this.props.putStudent(studentToSend);
@@ -1318,7 +1475,7 @@ class UpdateStudentForm extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] 
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         'h2',
         null,
-        'Cody\'s fucking student update form'
+        'Fuckin\' update a student form'
       ),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         'form',
@@ -1360,9 +1517,9 @@ const mapStateToProps = (state, ownProps) => ({
   name: state.students.studentNameForm,
   age: state.students.studentAgeForm,
   food: state.students.studentFoodForm,
-  campusId: state.students.campusId,
   currentStudent: state.students.currentStudent,
   campuses: state.campuses.list,
+  campusId: state.students.campusId,
   studentId: Number(ownProps.match.params.studentId),
   history: ownProps.history
 });
@@ -1581,7 +1738,7 @@ const removeStudent = studentId => async dispatch => {
 
 // HELPER FUNCTIONS
 const makeEmail = (campusName, headmasterName) => {
-  const firstNameLowerCase = headmasterName.split(' ')[0].toLowerCase();
+  const firstNameLowerCase = headmasterName.split(' ').join('').toLowerCase();
   const campusNameLowercase = campusName.split(' ').join('').toLowerCase();
   return `${firstNameLowerCase}@${campusNameLowercase}.wiz`;
 };
